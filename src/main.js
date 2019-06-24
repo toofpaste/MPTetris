@@ -5,6 +5,7 @@ context.scale(20, 20);
 
 function arenaSweep() {
     let rowCount = 1;
+
     outer: for (let y = arena.length -1; y > 0; --y) {
         for (let x = 0; x < arena[y].length; ++x) {
             if (arena[y][x] === 0) {
@@ -24,6 +25,7 @@ function arenaSweep() {
 function collide(arena, player) {
     const m = player.matrix;
     const o = player.pos;
+    //console.log(arena);
     for (let y = 0; y < m.length; ++y) {
         for (let x = 0; x < m[y].length; ++x) {
             if (m[y][x] !== 0 &&
@@ -236,7 +238,7 @@ const colors = [
     '#3877FF',
 ];
 
-const arena = createMatrix(12, 20);
+const arena = createMatrix(32, 50);
 
 const player = {
     pos: {x: 0, y: 0},
