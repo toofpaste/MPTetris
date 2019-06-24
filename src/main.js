@@ -30,13 +30,13 @@ function arenaSweep() {
 }
 
 function collide(arena, player) {
-  const m = player.matrix;
-  const o = player.pos;
-  for (let y = 0; y < m.length; ++y) {
-    for (let x = 0; x < m[y].length; ++x) {
-      if (m[y][x] !== 0 &&
-                (arena[y + o.y] &&
-                    arena[y + o.y][x + o.x]) !== 0) {
+  const mat = player.matrix;
+  const pos = player.pos;
+  for (let y = 0; y < mat.length; ++y) {
+    for (let x = 0; x < mat[y].length; ++x) {
+      if (mat[y][x] !== 0 &&
+                (arena[y + pos.y] &&
+                    arena[y + pos.y][x + pos.x]) !== 0) {
         return true;
       }
     }
@@ -44,10 +44,10 @@ function collide(arena, player) {
   return false;
 }
 
-function createMatrix(w, h) {
+function createMatrix(width, height) {
   const matrix = [];
-  while (h--) {
-    matrix.push(new Array(w).fill(0));
+  while (height--) {
+    matrix.push(new Array(width).fill(0));
   }
   return matrix;
 }
@@ -218,22 +218,26 @@ function playerRotate(dir) {
   }
 }
 
+
 let dropCounter = 0;
 let dropInterval = 500;
 
 let lastTime = 0;
+
 function update(time = 0) {
-  const deltaTime = time - lastTime;
+  if (pause === false) {
+    const deltaTime = time - lastTime;
 
-  dropCounter += deltaTime;
-  if (dropCounter > dropInterval) {
-    playerDrop();
+    dropCounter += deltaTime;
+    if (dropCounter > dropInterval) {
+      playerDrop();
+    }
+
+    lastTime = time;
+
+    draw();
+    requestAnimationFrame(update);
   }
-
-  lastTime = time;
-
-  draw();
-  requestAnimationFrame(update);
 }
 
 function updateScore() {
@@ -242,14 +246,17 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
-  if (event.keyCode === 37) {
+  if (event.keyCode === 37) { // left arrow
     playerMove(-1);
-  } else if (event.keyCode === 39) {
+  } else if (event.keyCode === 39) {  // right arrow
     playerMove(1);
-  } else if (event.keyCode === 40) {
+  } else if (event.keyCode === 40) {  // Down arrow
     playerDrop();
-  } else if (event.keyCode === 38) {
+  } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
+  } else if (event.keyCode === 80) {  // P button
+    pause = !pause;
+    update();
   }
 });
 
@@ -264,6 +271,7 @@ const colors = [
   '#3877FF',
 ];
 
+let pause = false;
 const arena = createMatrix(12, 20);
 
 playerReset();
