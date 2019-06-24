@@ -1,5 +1,28 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
+var myMusic;
+
+
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
+
+myMusic = new sound('src/audio/tetris.mp3');
+
+var audio = new Audio("src/audio/tetris.mp3");
+audio.play();
+
 
 const player = {
     pos: {
@@ -252,6 +275,7 @@ document.addEventListener('keydown', event => {
     playerMove(1);
   } else if (event.keyCode === 40) {  // Down arrow
     playerDrop();
+    myMusic.play();
   } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
   } else if (event.keyCode === 80) {  // P button
@@ -277,3 +301,52 @@ const arena = createMatrix(12, 20);
 playerReset();
 updateScore();
 update();
+
+//
+// var vid = "63hoSNvS6Z4",
+//     audio_streams = {},
+//     audio_tag = document.getElementById('youtube');
+//
+// fetch("https://"+vid+"-focus-opensocial.googleusercontent.com/gadgets/proxy?container=none&url=https%3A%2F%2Fwww.youtube.com%2Fget_video_info%3Fvideo_id%3D" + vid).then(response => {
+//     if (response.ok) {
+//         response.text().then(data => {
+//
+//             var data = parse_str(data),
+//                 streams = (data.url_encoded_fmt_stream_map + ',' + data.adaptive_fmts).split(',');
+//
+//             streams.forEach(function(s, n) {
+//                 var stream = parse_str(s),
+//                     itag = stream.itag * 1,
+//                     quality = false;
+//                 console.log(stream);
+//                 switch (itag) {
+//                     case 139:
+//                         quality = "48kbps";
+//                         break;
+//                     case 140:
+//                         quality = "128kbps";
+//                         break;
+//                     case 141:
+//                         quality = "256kbps";
+//                         break;
+//                 }
+//                 if (quality) audio_streams[quality] = stream.url;
+//             });
+//
+//             console.log(audio_streams);
+//
+//             audio_tag.src = audio_streams['128kbps'];
+//             audio_tag.play();
+//         })
+//     }
+// });
+//
+// function parse_str(str) {
+//     return str.split('&').reduce(function(params, param) {
+//         var paramSplit = param.split('=').map(function(value) {
+//             return decodeURIComponent(value.replace('+', ' '));
+//         });
+//         params[paramSplit[0]] = paramSplit[1];
+//         return params;
+//     }, {});
+// }
