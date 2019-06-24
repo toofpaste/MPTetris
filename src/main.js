@@ -103,7 +103,7 @@ function drawMatrix(matrix, offset) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        context.fillStyle = colors[value];
+        context.fillStyle = randomColor();
         context.fillRect(x + offset.x,
           y + offset.y,
           1, 1);
@@ -218,6 +218,13 @@ function playerRotate(dir) {
   }
 }
 
+function randomColor () {
+  var h = Math.round(Math.random() * 360);
+  var color = "hsl(" + h + ", 50%, 80%)";
+  // hsl(360, 100%, 100%);
+  return color;
+}
+
 
 let dropCounter = 0;
 let dropInterval = 500;
@@ -246,7 +253,7 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
-  if (event.keyCode === 37) { // left arrow
+  if (event.keyCode === 37) {         // left arrow
     playerMove(-1);
   } else if (event.keyCode === 39) {  // right arrow
     playerMove(1);
@@ -260,16 +267,17 @@ document.addEventListener('keydown', event => {
   }
 });
 
-const colors = [
-  null,
-  '#FF0D72',
-  '#0DC2FF',
-  '#0DFF72',
-  '#F538FF',
-  '#FF8E0D',
-  '#FFE138',
-  '#3877FF',
-];
+  // Piece colors
+// const colors = [
+//   null,
+//   '#FF0D72',
+//   '#0DC2FF',
+//   '#0DFF72',
+//   '#F538FF',
+//   '#FF8E0D',
+//   '#FFE138',
+//   '#3877FF',
+// ];
 
 let pause = false;
 const arena = createMatrix(12, 20);
