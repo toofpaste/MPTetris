@@ -1,6 +1,15 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
+const player = {
+    pos: {
+        x: 0,
+        y: 0
+    },
+    matrix: null,
+    score: 0,
+};
+
 context.scale(20, 20);
 
 function arenaSweep() {
@@ -189,7 +198,7 @@ function playerRotate(dir) {
 }
 
 let dropCounter = 0;
-let dropInterval = 500 - (player.score * 10);
+let dropInterval = 500;
 
 let lastTime = 0;
 function update(time = 0) {
@@ -208,6 +217,7 @@ function update(time = 0) {
 
 function updateScore() {
   document.getElementById('score').innerText = player.score;
+  dropInterval = 500 - (player.score * 10)
 }
 
 document.addEventListener('keydown', event => {
@@ -234,12 +244,6 @@ const colors = [
 ];
 
 const arena = createMatrix(12, 20);
-
-const player = {
-  pos: {x: 0, y: 0},
-  matrix: null,
-  score: 0,
-};
 
 playerReset();
 updateScore();
