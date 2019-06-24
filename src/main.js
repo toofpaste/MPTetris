@@ -189,7 +189,7 @@ function playerRotate(dir) {
 }
 
 let dropCounter = 0;
-let dropInterval = 500;
+let dropInterval = 500 - (player.score * 10);
 
 let lastTime = 0;
 function update(time = 0) {
