@@ -1,6 +1,7 @@
 import './styles.css';
 
 const canvas = document.getElementById('tetris');
+const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
 
 const player = {
@@ -117,7 +118,7 @@ function draw() {
   if (player.score < 10) {
     context.fillStyle = '#000';
   } else if (player.score < 20) {
-    context.fillStyle = '#3CE25A';
+    context.fillStyle = '#3299CC';
   } else if (player.score < 30) {
     context.fillStyle = '#FF2E2E';
   } else if (player.score < 40) {
@@ -137,6 +138,7 @@ function draw() {
   }
 
   context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillRect(0, 0, next.width, next.height);
 
   drawMatrix(arena, {
     x: 0,
@@ -167,7 +169,6 @@ function rotate(matrix, dir) {
       ];
     }
   }
-
   if (dir > 0) {
     matrix.forEach(row => row.reverse());
   } else {
@@ -194,6 +195,7 @@ function playerMove(offset) {
   }
 }
 
+    // Creates New Piece
 function playerReset() {
   const pieces = 'TJLOSZI';
   player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
@@ -204,6 +206,10 @@ function playerReset() {
     newGame();
   }
 }
+
+//  Array of 2 [next piece, current piece]
+//  index 0 displays in next div, index 1 drops
+//  every time playerReset() is called shift random piece into array, pop off end.
 
 function newGame() {
   pause = true;
