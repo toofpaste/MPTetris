@@ -6,12 +6,12 @@ body {
     text-align: center;
 }
 
-canvas {
+#tetris {
     border: solid .2em #fff;
     height: 90vh;
 }
 
-/* #next {
+#next {
    border: solid .2em #fff;
-
-} */
+   height: 30vh;
+}
