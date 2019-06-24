@@ -113,7 +113,28 @@ function drawMatrix(matrix, offset) {
 }
 
 function draw() {
-  context.fillStyle = '#000';
+    if (player.score < 10) {
+        context.fillStyle = '#000';
+    } else if (player.score < 20) {
+        context.fillStyle = '#3CE25A';
+    } else if (player.score < 30) {
+        context.fillStyle = '#FF2E2E';
+    } else if (player.score < 40) {
+        context.fillStyle = '#00FFFF';
+    } else if (player.score < 50) {
+        context.fillStyle = '#FF00FF';
+    } else if (player.score < 60) {
+        context.fillStyle = '#FFFF00';
+    } else if (player.score < 70) {
+        context.fillStyle = '#FF8400';
+    } else if (player.score < 80) {
+        context.fillStyle = '#0084FF';
+    } else if (player.score < 90) {
+        context.fillStyle = '#9CCF12';
+    } else {
+        context.fillStyle = '#ff69b4';
+    }
+
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   drawMatrix(arena, {x: 0, y: 0});
