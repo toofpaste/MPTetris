@@ -1,5 +1,7 @@
 import './styles.css';
 import img from './assets/header.gif'
+
+
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
