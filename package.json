@@ -6,9 +6,10 @@
   "scripts": {
     "test": "karma start karma.conf.js",
     "build": "webpack --mode development",
-    "start": "webpack-dev-server --open --mode development",
+    "start": "npm run build && webpack-dev-server --open --mode development",
     "watch": "webpack --watch",
-    "lint": "eslint src/*.js"
+    "lint": "eslint src/*.js",
+    "lintfix": "eslint --fix src/*.js"
   },
   "repository": {
     "type": "git"
@@ -45,6 +46,7 @@
     "webpack-dev-server": "^3.1.0"
   },
   "dependencies": {
+    "web3-eth": "^1.0.0-beta.55",
     "webpack": "4.19.1"
   }
 }
