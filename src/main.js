@@ -4,20 +4,16 @@ const canvas = document.getElementById('tetris');
 const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
 
-let nextPiece = [
-  [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ],
-  [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-  ]
-];
+// let nextPiece = [
+//   [
+//     [0, 0],
+//     [0, 0],
+//   ],
+//   [
+//     [0, 0],
+//     [0, 0],
+//   ]
+// ];
 
 const player = {
   pos: {
@@ -215,9 +211,9 @@ function playerMove(offset) {
     // Creates New Piece
 function playerReset() {
   const pieces = 'TJLOSZI';
-  nextPiece.pop(); // add to createPiece()
-  nextPiece.unshift(createPiece(pieces[pieces.length * Math.random() | 0]));
-  player.matrix = nextPiece[1];
+  // nextPiece.pop(); // add to createPiece()
+  // nextPiece.unshift(createPiece(pieces[pieces.length * Math.random() | 0]));
+  player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
   player.pos.y = 0;
   player.pos.x = (arena[0].length / 2 | 0) -
     (player.matrix[0].length / 2 | 0);
@@ -284,7 +280,7 @@ function update(time = 0) {
 
 function updateScore() {
   document.getElementById('score').innerText = "Lines: " + player.score;
-  dropInterval = 400 - (player.score * 10); // make this 500 for real play
+  dropInterval = 300 - (player.score * 10); // make this 500 for real play
 }
 
 document.addEventListener('keydown', event => {
@@ -303,16 +299,16 @@ document.addEventListener('keydown', event => {
 });
 
 // Piece colors
-// const colors = [
-//   null,
-//   '#FF0D72',
-//   '#0DC2FF',
-//   '#0DFF72',
-//   '#F538FF',
-//   '#FF8E0D',
-//   '#FFE138',
-//   '#3877FF',
-// ];
+const colors = [
+  null,
+  '#FF0D72',
+  '#0DC2FF',
+  '#0DFF72',
+  '#F538FF',
+  '#FF8E0D',
+  '#FFE138',
+  '#3877FF',
+];
 
 let pause = false;
 const arena = createMatrix(12, 20);
