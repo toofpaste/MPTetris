@@ -1,0 +1,17 @@
+body {
+    background: #202028;
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 2em;
+    text-align: center;
+}
+
+#tetris {
+    border: solid .2em #fff;
+    height: 90vh;
+}
+
+#next {
+   border: solid .2em #fff;
+   height: 30vh;
+}
