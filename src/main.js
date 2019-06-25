@@ -117,12 +117,12 @@ function drawMatrix(matrix, offset) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        if (brookeMode === false) {           // Piece colors
+        if (brookeMode === false) { // Piece colors
           context.fillStyle = colors[value];
           context.fillRect(x + offset.x,
             y + offset.y,
             1, 1);
-        } else {                              // Brooke Mode
+        } else { // Brooke Mode
           context.fillStyle = randomColor();
           context.fillRect(x + offset.x,
             y + offset.y,
@@ -135,7 +135,9 @@ function drawMatrix(matrix, offset) {
 
 // Canvas background colors
 function draw() {
-  if(brookeMode) {
+  if (artMode) {
+    context.fillStyle = 'transparent';
+  } else if (brookeMode) {
     context.fillStyle = randomColor();
   } else {
     if (player.score < 10) {
@@ -161,7 +163,7 @@ function draw() {
     }
   }
 
-    context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, next.width, next.height);
 
   drawMatrix(arena, {
@@ -290,8 +292,13 @@ function update(time = 0) {
 }
 
 function updateScore() {
-  if(brookeMode) {
+  if (brookeMode && artMode) {
+    document.getElementById('score').innerText = "The Acid? it WorkiNG! " + (player.score * Math.random());
+  }
+  else if (brookeMode) {
     document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
+  } else if (artMode) {
+    document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
   } else {
     document.getElementById('score').innerText = "Lines: " + player.score;
   }
@@ -312,7 +319,10 @@ document.addEventListener('keydown', event => {
     update();
   } else if (event.keyCode === 66) { // B button
     brookeMode = !brookeMode;
-    updateScore()
+    updateScore();
+  } else if (event.keyCode === 192) { // ~ button
+    artMode = !artMode;
+    updateScore();
   }
 });
 
@@ -330,6 +340,7 @@ const colors = [
 
 let pause = false;
 let brookeMode = false;
+let artMode = true;
 const arena = createMatrix(12, 20);
 
 playerReset();
