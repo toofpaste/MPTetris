@@ -1,7 +1,30 @@
 import './styles.css';
 import img from './assets/header.gif'
+import logoImg from './assets/logo3.png'
+import $ from 'jquery';
+
+var logoPic = document.getElementById('logo-pic');
+logoPic.src = logoImg;
 
 
+// $(function(){
+//     $('#nav-button').click(function(){
+//         // $('.header').hide();
+//         alert("it worked");
+//     })
+// })
+
+function myFunction() {
+    var x = document.getElementById("header");
+    // if (x.style.display === "none") {
+    //   x.style.display = "block";
+    // } else {
+    //   x.style.display = "none";
+    // }
+    alert("it worked");
+  }
+
+//tetris logic//
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 

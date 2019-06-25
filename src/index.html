@@ -20,15 +20,17 @@
         </style>
 </head>
 <body>
-    <header class="header">
+    <header id="header">
         <div class="nav-box">
             <ul class="nav-list">
                 <li><a>Rules</a></li>
-                <li class="nav-logo"><a>Tetris</a></li>
+                <li class="nav-logo"><a>
+                    <img id="logo-pic" /> 
+                </a></li>
                 <li><a>About</a></li>
             </ul>
         </div>
-        <button class="nav-button">Play</button>
+        <button class="nav-button" onclick="myFunction()">Play</button>
     </header>
 <div id="score"></div>
 <canvas id="tetris" width="640" height="1000" />
