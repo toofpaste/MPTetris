@@ -14,8 +14,8 @@ let dropPlayer= new Audio(dropSound);
 let clearPlayer = new Audio(clearLine);
 let meowPlayer = new Audio(meow);
 
-musicPlayer.volume = 0.2;
-musicPlayer.play();
+musicPlayer.volume = 0.1;
+
 
 var logoPic = document.getElementById('logo-pic');
 logoPic.src = logoImg;
@@ -75,6 +75,7 @@ function arenaSweep() {
     ++y;
 
     player.score += rowCount;
+    clearPlayer.play();
   }
 }
 
@@ -86,10 +87,12 @@ function collide(arena, player) {
       if (mat[y][x] !== 0 &&
         (arena[y + pos.y] &&
           arena[y + pos.y][x + pos.x]) !== 0) {
+              dropPlayer.play();
         return true;
       }
     }
   }
+
   return false;
 }
 
