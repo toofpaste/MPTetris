@@ -117,12 +117,12 @@ function drawMatrix(matrix, offset) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        if (brookeMode === false) {
+        if (brookeMode === false) {           // Piece colors
           context.fillStyle = colors[value];
           context.fillRect(x + offset.x,
             y + offset.y,
             1, 1);
-        } else { // Brooke Mode
+        } else {                              // Brooke Mode
           context.fillStyle = randomColor();
           context.fillRect(x + offset.x,
             y + offset.y,
@@ -133,7 +133,7 @@ function drawMatrix(matrix, offset) {
   });
 }
 
-// Piece colors
+// Canvas background colors
 function draw() {
   if(brookeMode) {
     context.fillStyle = randomColor();
@@ -290,7 +290,11 @@ function update(time = 0) {
 }
 
 function updateScore() {
-  document.getElementById('score').innerText = "Lines: " + player.score;
+  if(brookeMode) {
+    document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
+  } else {
+    document.getElementById('score').innerText = "Lines: " + player.score;
+  }
   dropInterval = 300 - (player.score * 10); // make this 500 for real play
 }
 
@@ -306,8 +310,9 @@ document.addEventListener('keydown', event => {
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
     update();
-  } else if (event.keyCode === 66) {
+  } else if (event.keyCode === 66) { // B button
     brookeMode = !brookeMode;
+    updateScore()
   }
 });
 
