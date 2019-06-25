@@ -10,7 +10,7 @@ let rotateSound = require('./audio/rotate.wav');
 let meow = require('./audio/meow.mp3');
 let rotatePlayer = new Audio(rotateSound);
 let musicPlayer = new Audio(myMusic);
-let dropPlayer= new Audio(dropSound);
+let dropPlayer = new Audio(dropSound);
 let clearPlayer = new Audio(clearLine);
 let meowPlayer = new Audio(meow);
 
@@ -23,19 +23,23 @@ logoPic.src = logoImg;
 var canvasBackgroundImg = new Image();
 canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
 
-$(function(){
-    $('.gameSection').hide();
-    $('.nav-button').click(function(){
-        $('#header').hide('slow');
-        $('.gameSection').show('slow');
+$(function () {
+  $('.gameSection').hide();
+  $('.nav-button').click(function () {
+    $('#header').hide('slow');
+    $('.gameSection').show('slow');
 
-    })
-})
+  });
+});
 
 //tetris logic//
 const canvas = document.getElementById('tetris');
-const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
+const nextCanvas = document.getElementById('nextPiece');
+const nextCanvasContext = nextCanvas.getContext('2d');
+nextCanvasContext.fillStyle = '#000';
+nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+nextCanvasContext.scale(40, 40);
 
 const pieces = 'TJLOSZI';
 let nextPiece = [createPiece(pieces[pieces.length * Math.random() | 0])];
@@ -52,7 +56,6 @@ const player = {
 
 
 context.scale(40, 40);
-
 
 function arenaSweep() {
   let rowCount = 1;
@@ -160,6 +163,17 @@ function drawMatrix(matrix, offset) {
   });
 }
 
+function drawNextPiece(piece) {
+  piece.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if(value !==0) {
+        nextCanvasContext.fillStyle = 'red';
+        nextCanvasContext.fillRect(x, y, 1, 1)
+      }
+    });
+  });
+}
+
 // Canvas background colors
 function draw() {
   if (artMode) {
@@ -191,7 +205,6 @@ function draw() {
   }
 
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.fillRect(0, 0, next.width, next.height);
 
   drawMatrix(arena, {
     x: 0,
@@ -250,21 +263,16 @@ function playerMove(offset) {
 
 // Creates New Piece
 function playerReset() {
-  // nextPiece.pop(); // add to createPiece()
-  // nextPiece.unshift(createPiece(pieces[pieces.length * Math.random() | 0]));
   player.matrix = nextPiece[0];
   player.pos.y = 0;
   player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
   nextPiece.shift();
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
+  drawNextPiece(nextPiece[0]);
   if (collide(arena, player)) {
     newGame();
   }
 }
-
-//  Array of 2 [next piece, current piece]
-//  index 0 displays in next div, index 1 drops
-//  every time playerReset() is called shift random piece into array, pop off end.
 
 function newGame() {
   pause = true;
@@ -383,3 +391,4 @@ const arena = createMatrix(12, 20);
 playerReset();
 updateScore();
 update();
+drawNextPiece(nextPiece[0]);
