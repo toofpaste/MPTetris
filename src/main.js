@@ -117,10 +117,17 @@ function drawMatrix(matrix, offset) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        context.fillStyle = randomColor();
-        context.fillRect(x + offset.x,
-          y + offset.y,
-          1, 1);
+        if (brookeMode === false) {
+          context.fillStyle = colors[value];
+          context.fillRect(x + offset.x,
+            y + offset.y,
+            1, 1);
+        } else { // Brooke Mode
+          context.fillStyle = randomColor();
+          context.fillRect(x + offset.x,
+            y + offset.y,
+            1, 1);
+        }
       }
     });
   });
@@ -128,29 +135,33 @@ function drawMatrix(matrix, offset) {
 
 // Piece colors
 function draw() {
-  if (player.score < 10) {
-    context.fillStyle = '#000';
-  } else if (player.score < 20) {
-    context.fillStyle = '#3299CC';
-  } else if (player.score < 30) {
-    context.fillStyle = '#FF2E2E';
-  } else if (player.score < 40) {
-    context.fillStyle = '#00FFFF';
-  } else if (player.score < 50) {
-    context.fillStyle = '#FF00FF';
-  } else if (player.score < 60) {
-    context.fillStyle = '#FFFF00';
-  } else if (player.score < 70) {
-    context.fillStyle = '#FF8400';
-  } else if (player.score < 80) {
-    context.fillStyle = '#0084FF';
-  } else if (player.score < 90) {
-    context.fillStyle = '#9CCF12';
+  if(brookeMode) {
+    context.fillStyle = randomColor();
   } else {
-    context.fillStyle = '#ff69b4';
+    if (player.score < 10) {
+      context.fillStyle = '#000';
+    } else if (player.score < 20) {
+      context.fillStyle = '#3299CC';
+    } else if (player.score < 30) {
+      context.fillStyle = '#FF2E2E';
+    } else if (player.score < 40) {
+      context.fillStyle = '#00FFFF';
+    } else if (player.score < 50) {
+      context.fillStyle = '#FF00FF';
+    } else if (player.score < 60) {
+      context.fillStyle = '#FFFF00';
+    } else if (player.score < 70) {
+      context.fillStyle = '#FF8400';
+    } else if (player.score < 80) {
+      context.fillStyle = '#0084FF';
+    } else if (player.score < 90) {
+      context.fillStyle = '#9CCF12';
+    } else {
+      context.fillStyle = '#ff69b4';
+    }
   }
 
-  context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, next.width, next.height);
 
   drawMatrix(arena, {
@@ -208,7 +219,7 @@ function playerMove(offset) {
   }
 }
 
-    // Creates New Piece
+// Creates New Piece
 function playerReset() {
   const pieces = 'TJLOSZI';
   // nextPiece.pop(); // add to createPiece()
@@ -295,6 +306,8 @@ document.addEventListener('keydown', event => {
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
     update();
+  } else if (event.keyCode === 66) {
+    brookeMode = !brookeMode;
   }
 });
 
@@ -311,6 +324,7 @@ const colors = [
 ];
 
 let pause = false;
+let brookeMode = false;
 const arena = createMatrix(12, 20);
 
 playerReset();
