@@ -1,5 +1,11 @@
 import './styles.css';
 
+let myMusic = require('./tetris.mp3');
+let audioPlayer = new Audio(myMusic);
+audioPlayer.play();
+
+
+
 const canvas = document.getElementById('tetris');
 const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
@@ -105,7 +111,7 @@ function drawMatrix(matrix, offset) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        context.fillStyle = randomColor();
+        context.fillStyle = colors[value];
         context.fillRect(x + offset.x,
           y + offset.y,
           1, 1);
@@ -115,28 +121,27 @@ function drawMatrix(matrix, offset) {
 }
 
 function draw() {
-  context.fillStyle = randomColor();
-  // if (player.score < 10) {
-    // context.fillStyle = '#000';
-  // } else if (player.score < 20) {
-  //   context.fillStyle = '#3299CC';
-  // } else if (player.score < 30) {
-  //   context.fillStyle = '#FF2E2E';
-  // } else if (player.score < 40) {
-  //   context.fillStyle = '#00FFFF';
-  // } else if (player.score < 50) {
-  //   context.fillStyle = '#FF00FF';
-  // } else if (player.score < 60) {
-  //   context.fillStyle = '#FFFF00';
-  // } else if (player.score < 70) {
-  //   context.fillStyle = '#FF8400';
-  // } else if (player.score < 80) {
-  //   context.fillStyle = '#0084FF';
-  // } else if (player.score < 90) {
-  //   context.fillStyle = '#9CCF12';
-  // } else {
-  //   context.fillStyle = '#ff69b4';
-  // }
+  if (player.score < 10) {
+    context.fillStyle = '#000';
+  } else if (player.score < 20) {
+    context.fillStyle = '#3299CC';
+  } else if (player.score < 30) {
+    context.fillStyle = '#FF2E2E';
+  } else if (player.score < 40) {
+    context.fillStyle = '#00FFFF';
+  } else if (player.score < 50) {
+    context.fillStyle = '#FF00FF';
+  } else if (player.score < 60) {
+    context.fillStyle = '#FFFF00';
+  } else if (player.score < 70) {
+    context.fillStyle = '#FF8400';
+  } else if (player.score < 80) {
+    context.fillStyle = '#0084FF';
+  } else if (player.score < 90) {
+    context.fillStyle = '#9CCF12';
+  } else {
+    context.fillStyle = '#ff69b4';
+  }
 
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, next.width, next.height);
@@ -178,6 +183,7 @@ function rotate(matrix, dir) {
 }
 
 function playerDrop() {
+  audioPlayer.play();
   player.pos.y++;
   if (collide(arena, player)) {
     player.pos.y--;
@@ -276,25 +282,27 @@ document.addEventListener('keydown', event => {
     playerMove(1);
   } else if (event.keyCode === 40) { // Down arrow
     playerDrop();
+
   } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
+    audioPlayer.pause();
     update();
   }
 });
 
 // Piece colors
-// const colors = [
-//   null,
-//   '#FF0D72',
-//   '#0DC2FF',
-//   '#0DFF72',
-//   '#F538FF',
-//   '#FF8E0D',
-//   '#FFE138',
-//   '#3877FF',
-// ];
+const colors = [
+  null,
+  '#FF0D72',
+  '#0DC2FF',
+  '#0DFF72',
+  '#F538FF',
+  '#FF8E0D',
+  '#FFE138',
+  '#3877FF',
+];
 
 let pause = false;
 const arena = createMatrix(12, 20);

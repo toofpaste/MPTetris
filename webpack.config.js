@@ -45,9 +45,14 @@ module.exports = {
                 ],
                 loader: "babel-loader",
                 options: {
-                    presets: ['es2015']
+                  presets: ['es2015']
                 }
-            }
-        ]
-    }
-};
+              },
+              {
+                test: /\.mp3$/,
+                loader: 'file-loader'
+              }
+
+            ]
+          }
+        };
