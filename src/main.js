@@ -1,5 +1,19 @@
 import './styles.css';
 
+let myMusic = require('./audio/tetris.mp3');
+let dropSound = require('./audio/drop-hit.wav');
+let clearLine = require('./audio/clear-line.wav');
+let rotateSound = require('./audio/rotate.wav');
+let rotatePlayer = new Audio(rotateSound);
+let musicPlayer = new Audio(myMusic);
+let dropPlayer= new Audio(dropSound);
+let clearPlayer = new Audio(clearLine);
+
+musicPlayer.volume = 0.2;
+musicPlayer.play();
+
+
+
 const canvas = document.getElementById('tetris');
 const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
@@ -203,6 +217,7 @@ function rotate(matrix, dir) {
 }
 
 function playerDrop() {
+  musicPlayer.play();
   player.pos.y++;
   if (collide(arena, player)) {
     player.pos.y--;
@@ -313,8 +328,10 @@ document.addEventListener('keydown', event => {
     playerDrop();
   } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
+    rotatePlayer.play();
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
+    musicPlayer.pause();
     update();
   } else if (event.keyCode === 66) { // B button
     brookeMode = !brookeMode;
