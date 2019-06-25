@@ -4,10 +4,12 @@ let myMusic = require('./audio/tetris.mp3');
 let dropSound = require('./audio/drop-hit.wav');
 let clearLine = require('./audio/clear-line.wav');
 let rotateSound = require('./audio/rotate.wav');
+let meow = require('./audio/meow.mp3');
 let rotatePlayer = new Audio(rotateSound);
 let musicPlayer = new Audio(myMusic);
 let dropPlayer= new Audio(dropSound);
 let clearPlayer = new Audio(clearLine);
+let meowPlayer = new Audio(meow);
 
 musicPlayer.volume = 0.2;
 musicPlayer.play();
@@ -217,7 +219,6 @@ function rotate(matrix, dir) {
 }
 
 function playerDrop() {
-  musicPlayer.play();
   player.pos.y++;
   if (collide(arena, player)) {
     player.pos.y--;
@@ -310,10 +311,14 @@ function updateScore() {
   if (brookeMode && artMode) {
     document.getElementById('score').innerText = "The Acid? it WorkiNG! " + (player.score * Math.random());
   } else if (brookeMode) {
+    meowPlayer.play();
+    musicPlayer.pause();
     document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
   } else if (artMode) {
     document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
   } else {
+    meowPlayer.pause();
+    musicPlayer.play();
     document.getElementById('score').innerText = "Lines: " + player.score;
   }
   dropInterval = 300 - (player.score * 10); // make this 500 for real play
@@ -331,7 +336,7 @@ document.addEventListener('keydown', event => {
     rotatePlayer.play();
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
-    musicPlayer.pause();
+    // musicPlayer.pause();
     update();
   } else if (event.keyCode === 66) { // B button
     brookeMode = !brookeMode;
