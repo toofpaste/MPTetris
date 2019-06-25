@@ -4,6 +4,21 @@ const canvas = document.getElementById('tetris');
 const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
 
+let nextPiece = [
+  [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ],
+  [
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+  ]
+];
+
 const player = {
   pos: {
     x: 0,
@@ -12,6 +27,7 @@ const player = {
   matrix: null,
   score: 0,
 };
+
 
 context.scale(20, 20);
 
@@ -114,6 +130,7 @@ function drawMatrix(matrix, offset) {
   });
 }
 
+// Piece colors
 function draw() {
   if (player.score < 10) {
     context.fillStyle = '#000';
@@ -198,7 +215,9 @@ function playerMove(offset) {
     // Creates New Piece
 function playerReset() {
   const pieces = 'TJLOSZI';
-  player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+  nextPiece.pop(); // add to createPiece()
+  nextPiece.unshift(createPiece(pieces[pieces.length * Math.random() | 0]));
+  player.matrix = nextPiece[1];
   player.pos.y = 0;
   player.pos.x = (arena[0].length / 2 | 0) -
     (player.matrix[0].length / 2 | 0);
