@@ -18,6 +18,17 @@ const canvas = document.getElementById('tetris');
 const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
 
+// let nextPiece = [
+//   [
+//     [0, 0],
+//     [0, 0],
+//   ],
+//   [
+//     [0, 0],
+//     [0, 0],
+//   ]
+// ];
+
 const player = {
   pos: {
     x: 0,
@@ -26,6 +37,7 @@ const player = {
   matrix: null,
   score: 0,
 };
+
 
 context.scale(20, 20);
 
@@ -119,36 +131,50 @@ function drawMatrix(matrix, offset) {
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        context.fillStyle = colors[value];
-        context.fillRect(x + offset.x,
-          y + offset.y,
-          1, 1);
+        if (brookeMode === false) { // Piece colors
+          context.fillStyle = colors[value];
+          context.fillRect(x + offset.x,
+            y + offset.y,
+            1, 1);
+        } else { // Brooke Mode
+          context.fillStyle = randomColor();
+          context.fillRect(x + offset.x,
+            y + offset.y,
+            1, 1);
+        }
       }
     });
   });
 }
 
+// Canvas background colors
 function draw() {
-  if (player.score < 10) {
-    context.fillStyle = '#000';
-  } else if (player.score < 20) {
-    context.fillStyle = '#3299CC';
-  } else if (player.score < 30) {
-    context.fillStyle = '#FF2E2E';
-  } else if (player.score < 40) {
-    context.fillStyle = '#00FFFF';
-  } else if (player.score < 50) {
-    context.fillStyle = '#FF00FF';
-  } else if (player.score < 60) {
-    context.fillStyle = '#FFFF00';
-  } else if (player.score < 70) {
-    context.fillStyle = '#FF8400';
-  } else if (player.score < 80) {
-    context.fillStyle = '#0084FF';
-  } else if (player.score < 90) {
-    context.fillStyle = '#9CCF12';
+  if (artMode) {
+    context.fillStyle = 'transparent';
+  } else if (brookeMode) {
+    context.fillStyle = randomColor();
   } else {
-    context.fillStyle = '#ff69b4';
+    if (player.score < 10) {
+      context.fillStyle = '#000';
+    } else if (player.score < 20) {
+      context.fillStyle = '#3299CC';
+    } else if (player.score < 30) {
+      context.fillStyle = '#FF2E2E';
+    } else if (player.score < 40) {
+      context.fillStyle = '#00FFFF';
+    } else if (player.score < 50) {
+      context.fillStyle = '#FF00FF';
+    } else if (player.score < 60) {
+      context.fillStyle = '#FFFF00';
+    } else if (player.score < 70) {
+      context.fillStyle = '#FF8400';
+    } else if (player.score < 80) {
+      context.fillStyle = '#0084FF';
+    } else if (player.score < 90) {
+      context.fillStyle = '#9CCF12';
+    } else {
+      context.fillStyle = '#ff69b4';
+    }
   }
 
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -210,9 +236,11 @@ function playerMove(offset) {
   }
 }
 
-    // Creates New Piece
+// Creates New Piece
 function playerReset() {
   const pieces = 'TJLOSZI';
+  // nextPiece.pop(); // add to createPiece()
+  // nextPiece.unshift(createPiece(pieces[pieces.length * Math.random() | 0]));
   player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
   player.pos.y = 0;
   player.pos.x = (arena[0].length / 2 | 0) -
@@ -279,8 +307,16 @@ function update(time = 0) {
 }
 
 function updateScore() {
-  document.getElementById('score').innerText = "Lines: " + player.score;
-  dropInterval = 400 - (player.score * 10); // make this 500 for real play
+  if (brookeMode && artMode) {
+    document.getElementById('score').innerText = "The Acid? it WorkiNG! " + (player.score * Math.random());
+  } else if (brookeMode) {
+    document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
+  } else if (artMode) {
+    document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
+  } else {
+    document.getElementById('score').innerText = "Lines: " + player.score;
+  }
+  dropInterval = 300 - (player.score * 10); // make this 500 for real play
 }
 
 document.addEventListener('keydown', event => {
@@ -297,6 +333,12 @@ document.addEventListener('keydown', event => {
     pause = !pause;
     musicPlayer.pause();
     update();
+  } else if (event.keyCode === 66) { // B button
+    brookeMode = !brookeMode;
+    updateScore();
+  } else if (event.keyCode === 192) { // ~ button
+    artMode = !artMode;
+    updateScore();
   }
 });
 
@@ -313,6 +355,8 @@ const colors = [
 ];
 
 let pause = false;
+let brookeMode = false;
+let artMode = false;
 const arena = createMatrix(12, 20);
 
 playerReset();
