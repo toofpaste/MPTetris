@@ -163,12 +163,14 @@ function drawMatrix(matrix, offset) {
   });
 }
 
-function drawNextPiece(piece) {
+function drawNextPiece(piece, offset) {
   piece.forEach((row, y) => {
+    // row.forEach(row => row.fill(0));
     row.forEach((value, x) => {
-      if(value !==0) {
+      nextCanvasContext.fillStyle = '#000';
+      if (value !== 0) {
         nextCanvasContext.fillStyle = 'red';
-        nextCanvasContext.fillRect(x, y, 1, 1)
+        nextCanvasContext.fillRect(x, y, 1, 1);
       }
     });
   });
@@ -268,7 +270,7 @@ function playerReset() {
   player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
   nextPiece.shift();
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
-  drawNextPiece(nextPiece[0]);
+  drawNextPiece(nextPiece[0], { x: 2, y: 2});
   if (collide(arena, player)) {
     newGame();
   }
@@ -386,9 +388,10 @@ let pause = false;
 let brookeMode = false;
 let artMode = false;
 const arena = createMatrix(12, 20);
+const upcoming = createMatrix(4, 4);
 // const arena = createMatrix(32, 50);  // large arena
 
 playerReset();
 updateScore();
 update();
-drawNextPiece(nextPiece[0]);
+drawNextPiece(nextPiece[0], { x: 2, y: 2});
