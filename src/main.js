@@ -58,7 +58,7 @@ const player = {
 };
 
 
-context.scale(20, 20);
+context.scale(40, 40);
 
 
 function arenaSweep() {
