@@ -1,4 +1,7 @@
 import './styles.css';
+import img from './assets/header.gif'
+import logoImg from './assets/logo3.png'
+import $ from 'jquery';
 
 let myMusic = require('./audio/tetris.mp3');
 let dropSound = require('./audio/drop-hit.wav');
@@ -14,8 +17,22 @@ let meowPlayer = new Audio(meow);
 musicPlayer.volume = 0.2;
 musicPlayer.play();
 
+var logoPic = document.getElementById('logo-pic');
+logoPic.src = logoImg;
 
+var canvasBackgroundImg = new Image();
+canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
 
+$(function(){
+    $('.gameSection').hide();
+    $('.nav-button').click(function(){
+        $('#header').hide('slow');
+        $('.gameSection').show('slow');
+
+    })
+})
+
+//tetris logic//
 const canvas = document.getElementById('tetris');
 const next = document.getElementById('next'); // IFFY
 const context = canvas.getContext('2d');
@@ -42,6 +59,7 @@ const player = {
 
 
 context.scale(20, 20);
+
 
 function arenaSweep() {
   let rowCount = 1;
@@ -363,6 +381,7 @@ let pause = false;
 let brookeMode = false;
 let artMode = false;
 const arena = createMatrix(12, 20);
+// const arena = createMatrix(32, 50);  // large arena
 
 playerReset();
 updateScore();

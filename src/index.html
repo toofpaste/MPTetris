@@ -5,9 +5,27 @@
 </head>
 
 <body>
-    <div id="score"></div>
-    <canvas id="tetris" width="240" height="400"></canvas>
-    <canvas id="next" width="200" height="200"></canvas>
+    <header id="header">
+        <div class="nav-box">
+            <ul class="nav-list">
+                <li><a>Rules</a></li>
+                <li class="nav-logo"><a>
+                    <img id="logo-pic" />
+                </a></li>
+                <li><a>About</a></li>
+            </ul>
+        </div>
+        <button class="nav-button">Play</button>
+    </header>
+
+    <section class="gameSection">
+        <div id="score"></div>
+        <!-- <canvas id="tetris" width="640" height="1000"></canvas> -->
+        <canvas id="tetris" width="240" height="400"></canvas>
+        <canvas id="next" width="200" height="200"></canvas>
+        <div id="rules">Rules</div>
+    </section>
+
 </body>
 
 </html>

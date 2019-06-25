@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
+
 module.exports = {
     entry: './src/main.js',
     output: {
@@ -32,6 +33,26 @@ module.exports = {
                     'css-loader'
                 ]
             },
+            {
+                test: /\.(png|jpe?g|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {},
+                    }
+                ]
+            },
+            // {
+            //     test:/\.(png|jp(e*)g|svg)$/,
+            //     use:[{
+            //         loader:'url-loader',
+            //         options: {
+            //             limit: 8000,
+            //             name: 'images/[hash]-[name].[ext]'
+            //         }
+            //     }]
+            // },
+        
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
