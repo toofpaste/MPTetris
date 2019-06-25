@@ -294,8 +294,7 @@ function update(time = 0) {
 function updateScore() {
   if (brookeMode && artMode) {
     document.getElementById('score').innerText = "The Acid? it WorkiNG! " + (player.score * Math.random());
-  }
-  else if (brookeMode) {
+  } else if (brookeMode) {
     document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
   } else if (artMode) {
     document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
@@ -340,7 +339,7 @@ const colors = [
 
 let pause = false;
 let brookeMode = false;
-let artMode = true;
+let artMode = false;
 const arena = createMatrix(12, 20);
 
 playerReset();
