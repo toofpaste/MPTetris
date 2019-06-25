@@ -327,19 +327,23 @@ function update(time = 0) {
 
 function updateScore() {
   if (brookeMode && artMode) {
+    meowPlayer.play();
+    musicPlayer.pause();
     document.getElementById('score').innerText = "The Acid? it WorkiNG! " + (player.score * Math.random());
   } else if (brookeMode) {
     meowPlayer.play();
     musicPlayer.pause();
     document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
   } else if (artMode) {
+    meowPlayer.pause();
+    musicPlayer.play();
     document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
   } else {
     meowPlayer.pause();
     musicPlayer.play();
     document.getElementById('score').innerText = "Lines: " + player.score;
   }
-  dropInterval = 300 - (player.score * 10); // make this 500 for real play
+  dropInterval = 500 - (player.score * 10);
 }
 
 document.addEventListener('keydown', event => {
