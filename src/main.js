@@ -1,8 +1,16 @@
 import './styles.css';
 
-let myMusic = require('./tetris.mp3');
-let audioPlayer = new Audio(myMusic);
-audioPlayer.play();
+let myMusic = require('./audio/tetris.mp3');
+let dropSound = require('./audio/drop-hit.wav');
+let clearLine = require('./audio/clear-line.wav');
+let rotateSound = require('./audio/rotate.wav');
+let rotatePlayer = new Audio(rotateSound);
+let musicPlayer = new Audio(myMusic);
+let dropPlayer= new Audio(dropSound);
+let clearPlayer = new Audio(clearLine);
+
+musicPlayer.volume = 0.2;
+musicPlayer.play();
 
 
 
@@ -183,7 +191,7 @@ function rotate(matrix, dir) {
 }
 
 function playerDrop() {
-  audioPlayer.play();
+  musicPlayer.play();
   player.pos.y++;
   if (collide(arena, player)) {
     player.pos.y--;
@@ -282,12 +290,12 @@ document.addEventListener('keydown', event => {
     playerMove(1);
   } else if (event.keyCode === 40) { // Down arrow
     playerDrop();
-
   } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
+    rotatePlayer.play();
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
-    audioPlayer.pause();
+    musicPlayer.pause();
     update();
   }
 });
