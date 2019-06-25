@@ -1,34 +1,35 @@
 import './styles.css';
 import img from './assets/header.gif'
 import logoImg from './assets/logo3.png'
+
 import $ from 'jquery';
 
 var logoPic = document.getElementById('logo-pic');
 logoPic.src = logoImg;
 
+var canvasBackgroundImg = new Image();
+canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
 
-// $(function(){
-//     $('#nav-button').click(function(){
-//         // $('.header').hide();
-//         alert("it worked");
-//     })
-// })
 
-function myFunction() {
-    var x = document.getElementById("header");
-    // if (x.style.display === "none") {
-    //   x.style.display = "block";
-    // } else {
-    //   x.style.display = "none";
-    // }
-    alert("it worked");
-  }
+
+
+$(function(){
+    $('.gameSection').hide();
+    $('.nav-button').click(function(){
+        $('#header').hide('slow');
+        $('.gameSection').show('slow');
+        
+    })
+})
+
 
 //tetris logic//
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
+
 context.scale(20, 20);
+
 
 function arenaSweep() {
     let rowCount = 1;
@@ -134,7 +135,9 @@ function drawMatrix(matrix, offset) {
 }
 
 function draw() {
-    context.fillStyle = '#000';
+   
+
+    context.fillStyle = 'black';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     drawMatrix(arena, {x: 0, y: 0});

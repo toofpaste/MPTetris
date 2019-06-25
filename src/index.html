@@ -1,5 +1,5 @@
-
 <html>
+
 <head>
     <title>Tetris</title>
     <style>
@@ -10,30 +10,41 @@
             font-size: 2em;
             text-align: center;
         }
+
         canvas {
             border: solid .2em #fff;
             height: 90vh;
         }
     </style>
-   <style>
+    <style>
         @import url('https://fonts.googleapis.com/css?family=Mali|Noto+Sans+HK&display=swap');
-        </style>
+    </style>
 </head>
+
 <body>
     <header id="header">
         <div class="nav-box">
             <ul class="nav-list">
                 <li><a>Rules</a></li>
                 <li class="nav-logo"><a>
-                    <img id="logo-pic" /> 
-                </a></li>
+                        <img id="logo-pic" />
+                    </a></li>
                 <li><a>About</a></li>
             </ul>
         </div>
-        <button class="nav-button" onclick="myFunction()">Play</button>
+        <button class="nav-button">Play</button>
     </header>
-<div id="score"></div>
-<canvas id="tetris" width="640" height="1000" />
-<script src="tetris.js"></script>
+
+    <section class="gameSection">
+        <div id="score"></div>
+        <canvas id="tetris" width="640" height="1000"></canvas>
+        <div id="rules">Rules</div>
+    </section>
+
+
+
+
+    <script src="tetris.js"></script>
 </body>
+
 </html>

@@ -10,9 +10,27 @@ html, body {
     font-size: small;
 }
 
+.gameSection {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   grid-gap: 30px;
+   background-image: url('./assets/header.gif');
+   height: 100vh;
+    background-size: cover;
+
+}
+#tetris {
+    opacity: .5;
+}
+
+
+
 #logo-pic {
     width: 300px;
     height: 200px;
+    position: absolute;
+    left: 39%;
+    animation: logoAnimate .8s ease-in;
 }
 
 
@@ -49,7 +67,7 @@ html, body {
     width: 200px;
     height: 60px;
     line-height: 60px;
-    margin-top: 15%;
+    margin-top: 25%;
     text-align: center;
     box-sizing: border-box;
     text-transform: uppercase;
@@ -106,6 +124,8 @@ html, body {
   animation:  a  8s linear Infinite;
 }
 
+
+
 @keyframes a {
     0%{
       background-position: 0%;
@@ -113,4 +133,23 @@ html, body {
     100%{
       background-position: 400%;
     }
+  }
+
+  @keyframes logoAnimate {
+      0%{
+          height: 0%
+      }
+      25% {
+          height: 50px;
+      }
+      50%{
+        height: 100px;
+      }
+      75%{
+        height: 150px;
+      }
+      100%{
+        height: 200px;
+      }
+      
   }
