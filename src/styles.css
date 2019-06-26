@@ -6,9 +6,8 @@ body {
     text-align: center;
 }
 
-#next {
+#tetris, #nextPiece {
     border: solid .2em #fff;
-    height: 30vh;
 }
 
 #header {
@@ -25,10 +24,6 @@ body {
     background-image: url('./assets/header.gif');
     height: 90vh;
     background-size: cover;
-}
-
-#tetris {
-    border: solid .2em #fff;
 }
 
 #logo-pic {
