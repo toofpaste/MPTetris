@@ -32,14 +32,14 @@ $(function () {
   });
 });
 
-//tetris logic//
+// tetris logic //
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const nextCanvas = document.getElementById('nextPiece');
 const nextCanvasContext = nextCanvas.getContext('2d');
 nextCanvasContext.fillStyle = '#000';
-nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-nextCanvasContext.scale(40, 40);
+nextCanvasContext.fillRect(1, 1, nextCanvas.width, nextCanvas.height);
+nextCanvasContext.scale(45, 45);
 
 const pieces = 'TJLOSZI';
 let nextPiece = [createPiece(pieces[pieces.length * Math.random() | 0])];
@@ -177,10 +177,10 @@ function drawNextPiece(piece) {
       // nextCanvasContext.fillStyle = '#000';
       if (value !== 0) {
         nextCanvasContext.fillStyle = colors[value];
-        nextCanvasContext.fillRect(x, y, 1, 1);
+        nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
       } else { // TEMP SOLUTION
         nextCanvasContext.fillStyle = '#000';
-        nextCanvasContext.fillRect(x, y, 1, 1);
+        nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
       }
     });
   });
@@ -398,7 +398,7 @@ let pause = false;
 let brookeMode = false;
 let artMode = false;
 const arena = createMatrix(12, 20);
-const upcoming = createMatrix(4, 4);
+const upcoming = createMatrix(5, 5);
 // const arena = createMatrix(32, 50);  // large arena
 
 playerReset();
