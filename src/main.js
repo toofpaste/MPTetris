@@ -8,13 +8,16 @@ let dropSound = require('./audio/drop-hit.wav');
 let clearLine = require('./audio/clear-line.wav');
 let rotateSound = require('./audio/rotate.wav');
 let meow = require('./audio/meow.mp3');
+let airhorn = require('./audio/airhorn.mp3');
 let rotatePlayer = new Audio(rotateSound);
 let musicPlayer = new Audio(myMusic);
 let dropPlayer = new Audio(dropSound);
 let clearPlayer = new Audio(clearLine);
 let meowPlayer = new Audio(meow);
+let airPlayer = new Audio(airhorn);
 
 musicPlayer.volume = 0.2;
+airPlayer.volume = 0.5;
 meowPlayer.volume = 0.5;
 musicPlayer.play();
 
@@ -341,21 +344,28 @@ function updateScore() {
   if (insaneMode) {
     document.getElementById('score').innerText = "GOOD LUCK! Lines: " + (((((player.score + 1) / (player.score + 1)) + (22 * 10)) * 3) + 3); //LOL
     dropInterval = 200;
+    airPlayer.play();
+    musicPlayer.pause();
+    meowPlayer.pause();
     return;
   } else if (brookeMode && artMode) {
     meowPlayer.play();
+    airPlayer.pause();
     musicPlayer.pause();
     document.getElementById('score').innerText = "The AciD iSn't WorkiNG! " + (player.score * Math.random());
   } else if (brookeMode) {
     meowPlayer.play();
+    airPlayer.pause();
     musicPlayer.pause();
     document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
   } else if (artMode) {
     meowPlayer.pause();
+    airPLayer.pause();
     musicPlayer.play();
     document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
   } else {
     meowPlayer.pause();
+    airPlayer.pause();
     musicPlayer.play();
     document.getElementById('score').innerText = "Lines: " + player.score;
   }
@@ -383,7 +393,7 @@ document.addEventListener('keydown', event => {
     artMode = !artMode;
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
-    insaneMode = !insaneMode;
+    insaneMode = !insaneMode; 
     updateScore();
   }
 });
