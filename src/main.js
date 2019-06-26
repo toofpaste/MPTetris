@@ -165,33 +165,24 @@ function drawMatrix(matrix, offset) {
 }
 
 function drawNextPiece(piece) {
-  if (!brookeMode) {
-    if (!artMode){
-      nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
-      nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-    }
-    piece.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value !== 0) {
-          nextCanvasContext.fillStyle = colors[value];
-          nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
-        }
-      });
-    });
-  } else { // brookemode
-    // nextCanvasContext.fillStyle = colors[value]; //why undefined?
-    if (!artMode){
-      nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-    }
-    piece.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value !== 0) {
-          nextCanvasContext.fillStyle = randomColor();
-          nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
-        }
-      });
-    });
+  if (!brookeMode && !artMode) {
+    nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
+    nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+  } else if (!artMode){
+     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
   }
+  piece.forEach((row, y) => {
+    row.forEach((value, x) => {
+      if (value !== 0) {
+        if(!brookeMode){
+          nextCanvasContext.fillStyle = colors[value];
+        } else {
+          nextCanvasContext.fillStyle = randomColor();
+        }
+        nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
+      }
+    });
+  });
 }
 
 // Canvas background colors
