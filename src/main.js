@@ -1,6 +1,6 @@
 import './styles.css';
-import img from './assets/header.gif'
-import logoImg from './assets/logo3.png'
+import img from './assets/header.gif';
+import logoImg from './assets/logo3.png';
 import $ from 'jquery';
 
 let myMusic = require('./audio/tetris.mp3');
@@ -29,7 +29,6 @@ musicPlayer.play();
 //   $('.nav-button').click(function () {
 //     $('#header').hide('slow');
 //     $('.gameSection').show('slow');
-
 //   });
 // });
 
@@ -41,8 +40,7 @@ const nextCanvasContext = nextCanvas.getContext('2d');
 nextCanvasContext.fillStyle = '#000';
 nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
 nextCanvasContext.scale(45, 45);
-
-const pieces = 'TJLOSZI';
+let pieces = 'TJLOSZI';
 let nextPiece = [createPiece(pieces[pieces.length * Math.random() | 0])];
 
 const player = {
@@ -51,7 +49,7 @@ const player = {
     y: 0
   },
   matrix: null,
-  score: 0,
+  score: 5,
 };
 
 
@@ -140,6 +138,36 @@ function createPiece(type) {
       [7, 7, 7],
       [0, 0, 0],
     ];
+  } else if (type === 'W'){
+    return [
+      [0, 8, 0],
+      [8, 8, 8],
+      [0, 8, 0],
+    ]
+  } else if (type === 'X') {
+    return [
+      [9, 0, 9],
+      [0, 0, 0],
+      [9, 0, 9],
+    ]
+  } else if (type === 'Y') {
+    return [
+      [10, 0, 10],
+      [0, 10, 0],
+      [0, 10, 0],
+    ]
+  } else if (type === 'Q') {
+    return [
+      [11, 11, 0],
+      [0, 0, 0],
+      [0, 11, 11],
+    ]
+  } else if (type === 'E') {
+    return [
+      [0, 12, 12],
+      [0, 0, 0],
+      [0, 12, 12],
+    ]
   }
 }
 
@@ -192,6 +220,10 @@ function drawNextPiece(piece) {
 
 // Canvas background colors
 function draw() {
+  if (player.score % 5 === 0){
+     pieces = 'TJLOSZIWXYQE';
+    //  console.log(pieces);
+  }
   if (artMode) {
     context.fillStyle = 'transparent';
   } else if (brookeMode) {
@@ -399,6 +431,12 @@ document.addEventListener('keydown', event => {
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
     insaneMode = !insaneMode;
+    if(insaneMode) {
+      pieces = 'TJLOSZIWXYQE';
+    } else {
+      pieces = pieces = 'TJLOSZI';
+
+    }
     updateScore();
   } else if (event.keyCode === 32) { // space bar
     if (gameOver) {
@@ -417,6 +455,11 @@ const colors = [
   '#FF8E0D',
   '#FFE138',
   '#3877FF',
+  'fuscia',
+  'grey',
+  'white',
+  'pink',
+  'brown'
 ];
 
 let gameOver = true;
