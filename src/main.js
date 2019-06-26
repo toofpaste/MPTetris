@@ -177,14 +177,14 @@ function drawNextPiece(piece) {
       });
     });
   } else {
-    nextCanvasContext.fillStyle = randomColor();
+    // nextCanvasContext.fillStyle = randomColor();
     // nextCanvasContext.fillStyle = colors[value]; //why undefined?
     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
 
     piece.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
-          nextCanvasContext.fillStyle = colors[value];
+          nextCanvasContext.fillStyle = randomColor();
           nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
         }
       });
