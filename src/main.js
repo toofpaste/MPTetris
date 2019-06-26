@@ -168,13 +168,13 @@ function drawNextPiece(piece) {
   if (!brookeMode && !artMode) {
     nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-  } else if (!artMode){
-     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+  } else if (!artMode) {
+    nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
   }
   piece.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== 0) {
-        if(!brookeMode){
+        if (!brookeMode) {
           nextCanvasContext.fillStyle = colors[value];
         } else {
           nextCanvasContext.fillStyle = randomColor();
@@ -341,7 +341,7 @@ function updateScore() {
   if (brookeMode && artMode) {
     meowPlayer.play();
     musicPlayer.pause();
-    document.getElementById('score').innerText = "The Acid? iSn't WorkiNG! " + (player.score * Math.random());
+    document.getElementById('score').innerText = "The AciD iSn't WorkiNG! " + (player.score * Math.random());
   } else if (brookeMode) {
     meowPlayer.play();
     musicPlayer.pause();
