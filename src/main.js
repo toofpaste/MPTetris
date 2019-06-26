@@ -41,7 +41,7 @@ nextCanvasContext.fillStyle = '#000';
 nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
 nextCanvasContext.scale(45, 45);
 let pieces = 'TJLOSZI';
-let nextPiece = [createPiece(pieces[pieces.length * Math.random() | 0])];
+let nextPiece = [createPiece('I')]; //[createPiece(pieces[pieces.length * Math.random() | 0])];
 
 const player = {
   pos: {
@@ -57,19 +57,19 @@ context.scale(40, 40);
 
 // Clears completed lines
 function arenaSweep() {
-  let rowCount = 1;
-  outer: for (let y = arena.length - 1; y > 0; --y) {
-    for (let x = 0; x < arena[y].length; ++x) {
-      if (arena[y][x] === 0) {
-        continue outer;
+  if (!gameOver){
+    let rowCount = 1;
+    outer: for (let y = arena.length - 1; y > 0; --y) {
+      for (let x = 0; x < arena[y].length; ++x) {
+        if (arena[y][x] === 0) {
+          continue outer;
+        }
       }
+      const row = arena.splice(y, 1)[0].fill(0);
+      arena.unshift(row);
+      ++y;
+      player.score += rowCount;
     }
-
-    const row = arena.splice(y, 1)[0].fill(0);
-    arena.unshift(row);
-    ++y;
-
-    player.score += rowCount;
   }
 }
 
@@ -88,8 +88,10 @@ function collide(arena, player) {
   return false;
 }
 
+// Creates game board
 function createMatrix(width, height) {
   const matrix = [];
+  // While height !0 we decrease height by 1
   while (height--) {
     matrix.push(new Array(width).fill(0));
   }
@@ -199,9 +201,6 @@ function drawMatrix(matrix, offset) {
 }
 
 function drawNextPiece(piece) {
-  // if(gameOver){
-  //   return;
-  // }
   if (!brookeMode && !artMode) {
     nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
@@ -229,7 +228,7 @@ function drawNextPiece(piece) {
 function draw() {
   if (artMode) {
     context.fillStyle = 'transparent';
-  } else if (brookeMode) {
+  } else if (brookeMode || insaneMode) {
     context.fillStyle = randomColor();
   } else {
     if (player.score < 10) {
@@ -302,7 +301,9 @@ function playerDrop() {
     player.pos.y--;
     merge(arena, player);
     playerReset();
+    console.log(player.score);
     arenaSweep();
+    console.log(player.score);
     updateScore();
   }
   dropCounter = 0;
@@ -315,7 +316,7 @@ function playerMove(offset) {
   }
 }
 
-// Creates New Piece
+// Creates New Piece - checks game over
 function playerReset() {
   if ((player.score !== 0 && player.score % 5 === 0) || insaneMode === true || hardMode === true) {
     pieces = 'TJLOSZIWXYQEK';
@@ -328,11 +329,14 @@ function playerReset() {
   nextPiece.shift();
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
   drawNextPiece(nextPiece[0]);
+  // Checks for Game Over
   if (collide(arena, player)) {
+    // console.log(player.score);
     arena.forEach(row => row.fill(Math.floor(Math.random() * Math.floor(13))));
     update();
     gameOver = true;
     pause = true;
+    // console.log(player.score);
   }
 }
 
