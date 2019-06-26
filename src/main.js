@@ -143,30 +143,36 @@ function createPiece(type) {
       [0, 8, 0],
       [8, 0, 8],
       [0, 8, 0],
-    ]
+    ];
   } else if (type === 'X') {
     return [
       [9, 0, 9],
       [0, 0, 0],
       [9, 0, 9],
-    ]
+    ];
   } else if (type === 'Y') {
     return [
       [10, 0, 10],
       [0, 10, 0],
       [0, 10, 0],
-    ]
+    ];
   } else if (type === 'Q') {
     return [
       [11, 11, 0],
       [0, 0, 0],
       [0, 11, 11],
-    ]
+    ];
   } else if (type === 'E') {
     return [
       [0, 12, 12],
       [0, 0, 0],
       [0, 12, 12],
+    ];
+  } else if (type = 'K') {
+    return [
+      [0, 13, 13],
+      [0, 0, 0],
+      [13, 13, 0],
     ]
   }
 }
@@ -220,11 +226,12 @@ function drawNextPiece(piece) {
 
 // Canvas background colors
 function draw() {
-  if (player.score % 5 === 0 || insaneMode === true) {
-    pieces = 'TJLOSZIWXYQE';
+  if ((player.score !== 0 && player.score % 5 === 0) || insaneMode === true || hardMode === true) {
+    pieces = 'TJLOSZIWXYQEK';
   } else {
     pieces = 'TJLOSZI';
   }
+  console.log(pieces);
   if (artMode) {
     context.fillStyle = 'transparent';
   } else if (brookeMode) {
@@ -432,15 +439,15 @@ document.addEventListener('keydown', event => {
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
     insaneMode = !insaneMode;
-    if (!insaneMode)
-      pieces = pieces = 'TJLOSZI';
+    updateScore();
+  } else if (event.keyCode === 32) { // space bar
+    if (gameOver) {
+      newGame();
+    }
+  } else if (event.keyCode === 72) { // H key
+    hardMode = !hardMode;
   }
-  updateScore();
-} else if (event.keyCode === 32) { // space bar
-  if (gameOver) {
-    newGame();
-  }
-}
+
 });
 
 // Piece colors
@@ -457,9 +464,11 @@ const colors = [
   'grey',
   'white',
   'pink',
-  'brown'
+  'brown',
+  'skyblue'
 ];
 
+let hardMode = false;
 let gameOver = true;
 let pause = true;
 let brookeMode = false;
