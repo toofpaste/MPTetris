@@ -49,7 +49,7 @@ const player = {
     y: 0
   },
   matrix: null,
-  score: 5,
+  score: 0,
 };
 
 
@@ -138,7 +138,7 @@ function createPiece(type) {
       [7, 7, 7],
       [0, 0, 0],
     ];
-  } else if (type === 'W'){
+  } else if (type === 'W') {
     return [
       [0, 8, 0],
       [8, 0, 8],
@@ -198,7 +198,7 @@ function drawNextPiece(piece) {
   if (!brookeMode && !artMode) {
     nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-    if(gameOver){
+    if (gameOver) {
       return;
     }
   } else if (!artMode) {
@@ -220,9 +220,10 @@ function drawNextPiece(piece) {
 
 // Canvas background colors
 function draw() {
-  if (player.score % 5 === 0){
-     pieces = 'TJLOSZIWXYQE';
-    //  console.log(pieces);
+  if (player.score % 5 === 0 || insaneMode === true) {
+    pieces = 'TJLOSZIWXYQE';
+  } else {
+    pieces = 'TJLOSZI';
   }
   if (artMode) {
     context.fillStyle = 'transparent';
@@ -431,18 +432,15 @@ document.addEventListener('keydown', event => {
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
     insaneMode = !insaneMode;
-    if(insaneMode) {
-      pieces = 'TJLOSZIWXYQE';
-    } else {
+    if (!insaneMode)
       pieces = pieces = 'TJLOSZI';
-
-    }
-    updateScore();
-  } else if (event.keyCode === 32) { // space bar
-    if (gameOver) {
-      newGame();
-    }
   }
+  updateScore();
+} else if (event.keyCode === 32) { // space bar
+  if (gameOver) {
+    newGame();
+  }
+}
 });
 
 // Piece colors
