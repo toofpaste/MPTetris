@@ -44,7 +44,6 @@ nextCanvasContext.scale(45, 45);
 
 const pieces = 'TJLOSZI';
 let nextPiece = [createPiece(pieces[pieces.length * Math.random() | 0])];
-// console.log(nextPiece);
 
 const player = {
   pos: {
@@ -254,6 +253,9 @@ function rotate(matrix, dir) {
 }
 
 function playerDrop() {
+  if (insaneMode) {
+    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+  }
   player.pos.y++;
   if (collide(arena, player)) {
     player.pos.y--;
@@ -338,7 +340,9 @@ function update(time = 0) {
 }
 
 function updateScore() {
-  if (brookeMode && artMode) {
+  if (insaneMode) {
+    document.getElementById('score').innerText = "GOOD LUCK! " + (player.score * Math.random());
+  } else if (brookeMode && artMode) {
     meowPlayer.play();
     musicPlayer.pause();
     document.getElementById('score').innerText = "The AciD iSn't WorkiNG! " + (player.score * Math.random());
@@ -368,7 +372,7 @@ document.addEventListener('keydown', event => {
   } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
     rotatePlayer.play();
-  } else if (event.keyCode === 80) { // P button
+  } else if (event.keyCode === 80 || event.keyCode === 32) { // P button & pausebar
     pause = !pause;
     // musicPlayer.pause();
     update();
@@ -377,6 +381,9 @@ document.addEventListener('keydown', event => {
     updateScore();
   } else if (event.keyCode === 192) { // ~ button
     artMode = !artMode;
+    updateScore();
+  } else if (event.keyCode === 54) { // 6 Key
+    insaneMode = true;
     updateScore();
   }
 });
@@ -393,9 +400,10 @@ const colors = [
   '#3877FF',
 ];
 
-let pause = false;
+let pause = true;
 let brookeMode = false;
 let artMode = false;
+let insaneMode = false;
 const arena = createMatrix(12, 20);
 const upcoming = createMatrix(5, 5);
 // const arena = createMatrix(32, 50);  // large arena
