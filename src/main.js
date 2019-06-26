@@ -319,10 +319,8 @@ function randomColor() {
   return color;
 }
 
-
 let dropCounter = 0;
-let dropInterval = 400; // make 500 for real play
-
+let dropInterval = 500;
 let lastTime = 0;
 
 function update(time = 0) {
@@ -341,7 +339,9 @@ function update(time = 0) {
 
 function updateScore() {
   if (insaneMode) {
-    document.getElementById('score').innerText = "GOOD LUCK! " + (player.score * Math.random());
+    document.getElementById('score').innerText = "GOOD LUCK! Lines: " + (((((player.score + 1) / (player.score + 1)) + (22 * 10)) * 3) + 3); //LOL
+    dropInterval = 200;
+    return;
   } else if (brookeMode && artMode) {
     meowPlayer.play();
     musicPlayer.pause();
