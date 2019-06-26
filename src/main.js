@@ -55,6 +55,7 @@ const player = {
 
 context.scale(40, 40);
 
+// Clears completed lines
 function arenaSweep() {
   let rowCount = 1;
   outer: for (let y = arena.length - 1; y > 0; --y) {
@@ -341,6 +342,7 @@ function newGame() {
   gameOver = false;
   arena.forEach(row => row.fill(0));
   player.score = 0;
+  playerReset();
   updateScore();
   update();
   drawNextPiece(nextPiece[0]);
@@ -479,7 +481,7 @@ let newLoadMessage = true;
 const arena = createMatrix(12, 20);
 // const arena = createMatrix(32, 50);  // large arena
 
-playerReset();
 update();
 updateScore();
 drawNextPiece(nextPiece[0]);
+draw();
