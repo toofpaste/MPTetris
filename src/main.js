@@ -107,38 +107,45 @@ function createPiece(type) {
     ];
   } else if (type === 'L') {
     return [
-      [0, 2, 0],
-      [0, 2, 0],
-      [0, 2, 2],
+      [0, 2, 0, 0],
+      [0, 2, 0, 0],
+      [0, 2, 2, 0],
+      [0, 0, 0, 0],
     ];
   } else if (type === 'J') {
     return [
-      [0, 3, 0],
-      [0, 3, 0],
-      [3, 3, 0],
+      [0, 0, 3, 0],
+      [0, 0, 3, 0],
+      [0, 3, 3, 0],
+      [0, 0, 0, 0],
     ];
   } else if (type === 'O') {
     return [
-      [4, 4],
-      [4, 4],
+      [0, 4, 4, 0],
+      [0, 4, 4, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
     ];
   } else if (type === 'Z') {
     return [
-      [5, 5, 0],
-      [0, 5, 5],
-      [0, 0, 0],
+      [5, 5, 0, 0],
+      [0, 5, 5, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
     ];
   } else if (type === 'S') {
     return [
-      [0, 6, 6],
-      [6, 6, 0],
-      [0, 0, 0],
+      [0, 6, 6, 0],
+      [6, 6, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
     ];
   } else if (type === 'T') {
     return [
-      [0, 7, 0],
-      [7, 7, 7],
-      [0, 0, 0],
+      [0, 7, 0, 0],
+      [7, 7, 7, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
     ];
   }
 }
@@ -169,7 +176,7 @@ function drawNextPiece(piece) {
     row.forEach((value, x) => {
       // nextCanvasContext.fillStyle = '#000';
       if (value !== 0) {
-        nextCanvasContext.fillStyle = 'red';
+        nextCanvasContext.fillStyle = colors[value];
         nextCanvasContext.fillRect(x, y, 1, 1);
       } else { // TEMP SOLUTION
         nextCanvasContext.fillStyle = '#000';
