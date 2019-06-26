@@ -372,9 +372,9 @@ document.addEventListener('keydown', event => {
   } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
     rotatePlayer.play();
-  } else if (event.keyCode === 80 || event.keyCode === 32) { // P button & pausebar
+  } else if (event.keyCode === 80 || event.keyCode === 32) { // P button & spacebar
     pause = !pause;
-    // musicPlayer.pause();
+    musicPlayer.play();
     update();
   } else if (event.keyCode === 66) { // B button
     brookeMode = !brookeMode;
