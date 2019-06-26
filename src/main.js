@@ -164,12 +164,15 @@ function drawMatrix(matrix, offset) {
 }
 
 function drawNextPiece(piece) {
-  // piece.forEach(row => row.fill(0));   // THIS IS WIPING THE UP NEXT PIECE
+  // piece.forEach(row => row.fill(0));   // THIS WIPES THE UP NEXT PIECE MATRIX
   piece.forEach((row, y) => {
     row.forEach((value, x) => {
       // nextCanvasContext.fillStyle = '#000';
       if (value !== 0) {
         nextCanvasContext.fillStyle = 'red';
+        nextCanvasContext.fillRect(x, y, 1, 1);
+      } else { // TEMP SOLUTION
+        nextCanvasContext.fillStyle = '#000';
         nextCanvasContext.fillRect(x, y, 1, 1);
       }
     });
