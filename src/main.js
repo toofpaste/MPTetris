@@ -328,6 +328,8 @@ function playerReset() {
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
   drawNextPiece(nextPiece[0]);
   if (collide(arena, player)) {
+    arena.forEach(row => row.fill(Math.floor(Math.random() * Math.floor(13))));
+    update();
     gameOver = true;
     pause = true;
   }
