@@ -166,8 +166,10 @@ function drawMatrix(matrix, offset) {
 
 function drawNextPiece(piece) {
   if (!brookeMode) {
-    nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
-    nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+    if (!artMode){
+      nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
+      nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+    }
     piece.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
@@ -176,11 +178,11 @@ function drawNextPiece(piece) {
         }
       });
     });
-  } else {
-    // nextCanvasContext.fillStyle = randomColor();
+  } else { // brookemode
     // nextCanvasContext.fillStyle = colors[value]; //why undefined?
-    nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
-
+    if (!artMode){
+      nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+    }
     piece.forEach((row, y) => {
       row.forEach((value, x) => {
         if (value !== 0) {
@@ -348,7 +350,7 @@ function updateScore() {
   if (brookeMode && artMode) {
     meowPlayer.play();
     musicPlayer.pause();
-    document.getElementById('score').innerText = "The Acid? it WorkiNG! " + (player.score * Math.random());
+    document.getElementById('score').innerText = "The Acid? iSn't WorkiNG! " + (player.score * Math.random());
   } else if (brookeMode) {
     meowPlayer.play();
     musicPlayer.pause();
