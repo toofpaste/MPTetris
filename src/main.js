@@ -141,7 +141,7 @@ function createPiece(type) {
   } else if (type === 'W'){
     return [
       [0, 8, 0],
-      [8, 8, 8],
+      [8, 0, 8],
       [0, 8, 0],
     ]
   } else if (type === 'X') {
@@ -455,7 +455,7 @@ const colors = [
   '#FF8E0D',
   '#FFE138',
   '#3877FF',
-  'fuscia',
+  'gold',
   'grey',
   'white',
   'pink',
