@@ -8,14 +8,17 @@ let dropSound = require('./audio/drop-hit.wav');
 let clearLine = require('./audio/clear-line.wav');
 let rotateSound = require('./audio/rotate.wav');
 let meow = require('./audio/meow.mp3');
+let airHorn = require('./audio/airhorn.mp3');
 let rotatePlayer = new Audio(rotateSound);
 let musicPlayer = new Audio(myMusic);
 let dropPlayer = new Audio(dropSound);
 let clearPlayer = new Audio(clearLine);
 let meowPlayer = new Audio(meow);
+let hornPlayer = new Audio(airHorn);
 
 musicPlayer.volume = 0.2;
 meowPlayer.volume = 0.5;
+hornPlayer.volume = 0.5;
 musicPlayer.play();
 
 // var logoPic = document.getElementById('logo-pic');
@@ -397,21 +400,28 @@ function updateScore() {
   } else if (insaneMode) {
     document.getElementById('score').innerText = "GOOD LUCK! Lines: " + (((((player.score + 1) / (player.score + 1)) + (22 * 10)) * 3) + 3); //LOL
     dropInterval = 200;
+    hornPlayer.play();
+    musicPlayer.pause();
+    meowPlayer.pause();
     return;
   } else if (brookeMode && artMode) {
     meowPlayer.play();
+    hornPlayer.pause();
     musicPlayer.pause();
     document.getElementById('score').innerText = "The AciD iSn't WorkiNG! " + (player.score * Math.random());
   } else if (brookeMode) {
     meowPlayer.play();
+    hornPlayer.pause();
     musicPlayer.pause();
     document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
   } else if (artMode) {
     meowPlayer.pause();
+    hornPlayer.pause();
     musicPlayer.play();
     document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
   } else {
     meowPlayer.pause();
+    hornPlayer.pause();
     musicPlayer.play();
     document.getElementById('score').innerText = "Lines: " + player.score;
   }
@@ -430,7 +440,6 @@ document.addEventListener('keydown', event => {
     rotatePlayer.play();
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
-    musicPlayer.play();
     update();
   } else if (event.keyCode === 66) { // B button
     brookeMode = !brookeMode;
