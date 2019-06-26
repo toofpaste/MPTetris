@@ -164,9 +164,15 @@ function drawMatrix(matrix, offset) {
 }
 
 function drawNextPiece(piece) {
+  // if(gameOver){
+  //   return;
+  // }
   if (!brookeMode && !artMode) {
     nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+    if(gameOver){
+      return;
+    }
   } else if (!artMode) {
     nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
   }
@@ -283,18 +289,20 @@ function playerReset() {
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
   drawNextPiece(nextPiece[0]);
   if (collide(arena, player)) {
-    newGame();
+    gameOver = true;
+    pause = true;
   }
 }
 
 function newGame() {
-  pause = true;
-  if (confirm("Final score: " + player.score + "\n Play again?")) {
-    pause = false;
-    arena.forEach(row => row.fill(0));
-    player.score = 0;
-    updateScore();
-  }
+  newLoadMessage = false;
+  pause = false;
+  gameOver = false;
+  arena.forEach(row => row.fill(0));
+  player.score = 0;
+  updateScore();
+  update();
+  drawNextPiece(nextPiece[0]);
 }
 
 function playerRotate(dir) {
@@ -324,7 +332,10 @@ let dropInterval = 500;
 let lastTime = 0;
 
 function update(time = 0) {
-  if (pause === false) {
+  if (gameOver) {
+    return;
+  }
+  if (!pause) {
     const deltaTime = time - lastTime;
 
     dropCounter += deltaTime;
@@ -338,7 +349,11 @@ function update(time = 0) {
 }
 
 function updateScore() {
-  if (insaneMode) {
+  if (newLoadMessage) {
+    document.getElementById('score').innerText = "Press Space Bar to Play";
+  } else if (gameOver) {
+    document.getElementById('score').innerText = "GAME OVER\n Final score: " + (player.score) + "\n \n Press Space Bar to play again";
+  } else if (insaneMode) {
     document.getElementById('score').innerText = "GOOD LUCK! Lines: " + (((((player.score + 1) / (player.score + 1)) + (22 * 10)) * 3) + 3); //LOL
     dropInterval = 200;
     return;
@@ -372,7 +387,7 @@ document.addEventListener('keydown', event => {
   } else if (event.keyCode === 38) { // Up arrow
     playerRotate(1);
     rotatePlayer.play();
-  } else if (event.keyCode === 80 || event.keyCode === 32) { // P button & spacebar
+  } else if (event.keyCode === 80) { // P button
     pause = !pause;
     musicPlayer.play();
     update();
@@ -385,6 +400,10 @@ document.addEventListener('keydown', event => {
   } else if (event.keyCode === 54) { // 6 Key
     insaneMode = !insaneMode;
     updateScore();
+  } else if (event.keyCode === 32) { // space bar
+    if (gameOver) {
+      newGame();
+    }
   }
 });
 
@@ -400,15 +419,17 @@ const colors = [
   '#3877FF',
 ];
 
+let gameOver = true;
 let pause = true;
 let brookeMode = false;
 let artMode = false;
 let insaneMode = false;
+let newLoadMessage = true;
 const arena = createMatrix(12, 20);
 const upcoming = createMatrix(5, 5);
 // const arena = createMatrix(32, 50);  // large arena
 
 playerReset();
-updateScore();
 update();
+updateScore();
 drawNextPiece(nextPiece[0]);
