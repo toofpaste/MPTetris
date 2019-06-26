@@ -163,11 +163,11 @@ function drawMatrix(matrix, offset) {
   });
 }
 
-function drawNextPiece(piece, offset) {
+function drawNextPiece(piece) {
+  // piece.forEach(row => row.fill(0));   // THIS IS WIPING THE UP NEXT PIECE
   piece.forEach((row, y) => {
-    // row.forEach(row => row.fill(0));
     row.forEach((value, x) => {
-      nextCanvasContext.fillStyle = '#000';
+      // nextCanvasContext.fillStyle = '#000';
       if (value !== 0) {
         nextCanvasContext.fillStyle = 'red';
         nextCanvasContext.fillRect(x, y, 1, 1);
@@ -270,7 +270,7 @@ function playerReset() {
   player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
   nextPiece.shift();
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
-  drawNextPiece(nextPiece[0], { x: 2, y: 2});
+  drawNextPiece(nextPiece[0]);
   if (collide(arena, player)) {
     newGame();
   }
@@ -394,4 +394,4 @@ const upcoming = createMatrix(4, 4);
 playerReset();
 updateScore();
 update();
-drawNextPiece(nextPiece[0], { x: 2, y: 2});
+drawNextPiece(nextPiece[0]);
