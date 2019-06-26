@@ -15,6 +15,7 @@ let clearPlayer = new Audio(clearLine);
 let meowPlayer = new Audio(meow);
 
 musicPlayer.volume = 0.2;
+meowPlayer.volume = 0.5;
 musicPlayer.play();
 
 var logoPic = document.getElementById('logo-pic');
@@ -32,18 +33,18 @@ $(function () {
   });
 });
 
-// tetris logic //
+// Tetris logic //
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const nextCanvas = document.getElementById('nextPiece');
 const nextCanvasContext = nextCanvas.getContext('2d');
 nextCanvasContext.fillStyle = '#000';
-nextCanvasContext.fillRect(1, 1, nextCanvas.width, nextCanvas.height);
+nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
 nextCanvasContext.scale(45, 45);
 
 const pieces = 'TJLOSZI';
 let nextPiece = [createPiece(pieces[pieces.length * Math.random() | 0])];
-console.log(nextPiece);
+// console.log(nextPiece);
 
 const player = {
   pos: {
@@ -107,45 +108,38 @@ function createPiece(type) {
     ];
   } else if (type === 'L') {
     return [
-      [0, 2, 0, 0],
-      [0, 2, 0, 0],
-      [0, 2, 2, 0],
-      [0, 0, 0, 0],
+      [0, 2, 0],
+      [0, 2, 0],
+      [0, 2, 2],
     ];
   } else if (type === 'J') {
     return [
-      [0, 0, 3, 0],
-      [0, 0, 3, 0],
-      [0, 3, 3, 0],
-      [0, 0, 0, 0],
+      [0, 3, 0],
+      [0, 3, 0],
+      [3, 3, 0],
     ];
   } else if (type === 'O') {
     return [
-      [0, 4, 4, 0],
-      [0, 4, 4, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
+      [4, 4],
+      [4, 4],
     ];
   } else if (type === 'Z') {
     return [
-      [5, 5, 0, 0],
-      [0, 5, 5, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
+      [5, 5, 0],
+      [0, 5, 5],
+      [0, 0, 0],
     ];
   } else if (type === 'S') {
     return [
-      [0, 6, 6, 0],
-      [6, 6, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
+      [0, 6, 6],
+      [6, 6, 0],
+      [0, 0, 0],
     ];
   } else if (type === 'T') {
     return [
-      [0, 7, 0, 0],
-      [7, 7, 7, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
+      [0, 7, 0],
+      [7, 7, 7],
+      [0, 0, 0],
     ];
   }
 }
@@ -171,19 +165,31 @@ function drawMatrix(matrix, offset) {
 }
 
 function drawNextPiece(piece) {
-  // piece.forEach(row => row.fill(0));   // THIS WIPES THE UP NEXT PIECE MATRIX
-  piece.forEach((row, y) => {
-    row.forEach((value, x) => {
-      // nextCanvasContext.fillStyle = '#000';
-      if (value !== 0) {
-        nextCanvasContext.fillStyle = colors[value];
-        nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
-      } else { // TEMP SOLUTION
-        nextCanvasContext.fillStyle = '#000';
-        nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
-      }
+  if (!brookeMode) {
+    nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
+    nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+    piece.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          nextCanvasContext.fillStyle = colors[value];
+          nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
+        }
+      });
     });
-  });
+  } else {
+    nextCanvasContext.fillStyle = randomColor();
+    // nextCanvasContext.fillStyle = colors[value]; //why undefined?
+    nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
+
+    piece.forEach((row, y) => {
+      row.forEach((value, x) => {
+        if (value !== 0) {
+          nextCanvasContext.fillStyle = colors[value];
+          nextCanvasContext.fillRect(x + 1, y + 1, 1, 1);
+        }
+      });
+    });
+  }
 }
 
 // Canvas background colors
