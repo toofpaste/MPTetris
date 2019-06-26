@@ -168,7 +168,7 @@ function createPiece(type) {
       [0, 0, 0],
       [0, 12, 12],
     ];
-  } else if (type = 'K') {
+  } else if (type === 'K') {
     return [
       [0, 13, 13],
       [0, 0, 0],
@@ -226,12 +226,6 @@ function drawNextPiece(piece) {
 
 // Canvas background colors
 function draw() {
-  if ((player.score !== 0 && player.score % 5 === 0) || insaneMode === true || hardMode === true) {
-    pieces = 'TJLOSZIWXYQEK';
-  } else {
-    pieces = 'TJLOSZI';
-  }
-  console.log(pieces);
   if (artMode) {
     context.fillStyle = 'transparent';
   } else if (brookeMode) {
@@ -322,6 +316,11 @@ function playerMove(offset) {
 
 // Creates New Piece
 function playerReset() {
+  if ((player.score !== 0 && player.score % 5 === 0) || insaneMode === true || hardMode === true) {
+    pieces = 'TJLOSZIWXYQEK';
+  } else {
+    pieces = 'TJLOSZI';
+  }
   player.matrix = nextPiece[0];
   player.pos.y = 0;
   player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
@@ -476,7 +475,6 @@ let artMode = false;
 let insaneMode = false;
 let newLoadMessage = true;
 const arena = createMatrix(12, 20);
-const upcoming = createMatrix(5, 5);
 // const arena = createMatrix(32, 50);  // large arena
 
 playerReset();
