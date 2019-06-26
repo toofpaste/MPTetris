@@ -383,7 +383,7 @@ document.addEventListener('keydown', event => {
     artMode = !artMode;
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
-    insaneMode = true;
+    insaneMode = !insaneMode;
     updateScore();
   }
 });
