@@ -21,19 +21,19 @@ meowPlayer.volume = 0.5;
 hornPlayer.volume = 0.5;
 musicPlayer.play();
 
-// var logoPic = document.getElementById('logo-pic');
-// logoPic.src = logoImg;
+var logoPic = document.getElementById('logo-pic');
+logoPic.src = logoImg;
 
-// var canvasBackgroundImg = new Image();
-// canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
+var canvasBackgroundImg = new Image();
+canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
 
-// $(function () {
-//   $('.gameSection').hide();
-//   $('.nav-button').click(function () {
-//     $('#header').hide('slow');
-//     $('.gameSection').show('slow');
-//   });
-// });
+$(function () {
+  $('.gameSection').hide();
+  $('.nav-button').click(function () {
+    $('#header').hide('slow');
+    $('.gameSection').show('slow');
+  });
+});
 
 // Tetris logic //
 const canvas = document.getElementById('tetris');
