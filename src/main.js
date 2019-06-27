@@ -8,14 +8,17 @@ let dropSound = require('./audio/drop-hit.wav');
 let clearLine = require('./audio/clear-line.wav');
 let rotateSound = require('./audio/rotate.wav');
 let meow = require('./audio/meow.mp3');
+let airHorn = require('./audio/airhorn.mp3');
 let rotatePlayer = new Audio(rotateSound);
 let musicPlayer = new Audio(myMusic);
 let dropPlayer = new Audio(dropSound);
 let clearPlayer = new Audio(clearLine);
 let meowPlayer = new Audio(meow);
+let hornPlayer = new Audio(airHorn);
 
 musicPlayer.volume = 0.2;
 meowPlayer.volume = 0.5;
+hornPlayer.volume = 0.5;
 musicPlayer.play();
 
 // var logoPic = document.getElementById('logo-pic');
@@ -171,11 +174,17 @@ function createPiece(type) {
       [0, 0, 0],
       [0, 12, 12],
     ];
-  } else if (type === 'K') {
+  } else if (type === 'F') {
     return [
       [0, 13, 13],
       [0, 0, 0],
       [13, 13, 0],
+    ];
+  } else if (type === 'K') {
+    return [
+      [0, 0, 14],
+      [0, 14, 0],
+      [14, 0, 14],
     ];
   }
 }
@@ -317,7 +326,7 @@ function playerMove(offset) {
 // Creates New Piece - checks game over
 function playerReset() {
   if ((player.score !== 0 && player.score % 5 === 0) || insaneMode === true || hardMode === true) {
-    pieces = 'TJLOSZIWXYQEK';
+    pieces = 'TJLOSZIWXYQEFK';
   } else {
     pieces = 'TJLOSZI';
   }
@@ -337,7 +346,7 @@ function playerReset() {
 }
 
 function gameOverScreen(row) {
-  row.fill(Math.floor(Math.random() * Math.floor(13)));
+  row.fill(Math.floor(Math.random() * Math.floor(14)));
   update();
 }
 
@@ -405,21 +414,28 @@ function updateScore() {
   } else if (insaneMode) {
     document.getElementById('score').innerText = "GOOD LUCK! Lines: " + (((((player.score + 1) / (player.score + 1)) + (22 * 10)) * 3) + 3); //LOL
     dropInterval = 200;
+    hornPlayer.play();
+    musicPlayer.pause();
+    meowPlayer.pause();
     return;
   } else if (brookeMode && artMode) {
     meowPlayer.play();
+    hornPlayer.pause();
     musicPlayer.pause();
     document.getElementById('score').innerText = "The AciD iSn't WorkiNG! " + (player.score * Math.random());
   } else if (brookeMode) {
     meowPlayer.play();
+    hornPlayer.pause();
     musicPlayer.pause();
     document.getElementById('score').innerText = "BrOoKe MoDe EnGaGeD! " + player.score;
   } else if (artMode) {
     meowPlayer.pause();
+    hornPlayer.pause();
     musicPlayer.play();
     document.getElementById('score').innerText = "Dada Mode! Score = " + player.score;
   } else {
     meowPlayer.pause();
+    hornPlayer.pause();
     musicPlayer.play();
     document.getElementById('score').innerText = "Lines: " + player.score;
   }
@@ -444,7 +460,6 @@ document.addEventListener('keydown', event => {
     rotatePlayer.play();
   } else if (event.keyCode === 80) { // P button
     pause = !pause;
-    musicPlayer.play();
     update();
   } else if (event.keyCode === 66) { // B button
     brookeMode = !brookeMode;
@@ -454,13 +469,19 @@ document.addEventListener('keydown', event => {
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
     insaneMode = !insaneMode;
-    if (insaneMode) { refreshUpNext(); }
+    if (insaneMode) {
+      refreshUpNext();
+    }
     updateScore();
   } else if (event.keyCode === 32) { // space bar
-    if (gameOver) { newGame(); }
+    if (gameOver) {
+      newGame();
+    }
   } else if (event.keyCode === 72) { // H key
     hardMode = !hardMode;
-    if (hardMode) { refreshUpNext(); }
+    if (hardMode) {
+      refreshUpNext();
+    }
   }
 });
 
@@ -479,7 +500,8 @@ const colors = [
   'white',
   'pink',
   'brown',
-  'skyblue'
+  'skyblue',
+  'salmon',
 ];
 
 let hardMode = false;
