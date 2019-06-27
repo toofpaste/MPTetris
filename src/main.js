@@ -2,6 +2,8 @@ import './styles.css';
 import img from './assets/header.gif';
 import logoImg from './assets/logo3.png';
 import $ from 'jquery';
+import marioImg from './assets/mario.gif';
+import wowImg from './assets/wow.gif';
 
 let myMusic = require('./audio/tetris.mp3');
 let dropSound = require('./audio/drop-hit.wav');
@@ -22,6 +24,7 @@ hornPlayer.volume = 0.5;
 musicPlayer.play();
 
 var logoPic = document.getElementById('logo-pic');
+var gifPic = document.getElementById('gifPic');
 logoPic.src = logoImg;
 
 var canvasBackgroundImg = new Image();
@@ -29,7 +32,7 @@ canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
 
 $(function () {
   $('.gameSection').hide();
-  $('.nav-button').click(function () {
+  $('#single').click(function () {
     $('#header').hide('slow');
     $('.gameSection').show('slow');
   });
@@ -55,18 +58,27 @@ const player = {
   score: 0,
 };
 
-
 context.scale(40, 40);
 
-// Clears completed lines
+function playWoW(){
+  if(playerScored){
+    gifPic.src = wowImg;
+    playerScored = false;
+    console.log('fuck')
+    setTimeout(function(){
+      gifPic.src = '';
+    },2500);
+  }
+}
+
 function arenaSweep() {
   if (!gameOver) {
     let rowCount = 1;
     outer: for (let y = arena.length - 1; y > 0; --y) {
-      for (let x = 0; x < arena[y].length; ++x) {
-        if (arena[y][x] === 0) {
-          continue outer;
-        }
+        for (let x = 0; x < arena[y].length; ++x) {
+          if (arena[y][x] === 0) {
+            continue outer;
+          }
       }
       const row = arena.splice(y, 1)[0].fill(0);
       arena.unshift(row);
@@ -74,6 +86,8 @@ function arenaSweep() {
       player.score += rowCount;
       dropInterval = 500 - (player.score * 10);
       clearPlayer.play();
+       playerScored = true;
+       playWoW();
     }
   }
 }
@@ -342,9 +356,8 @@ function playerReset() {
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
   drawNextPiece(nextPiece[0]);
   // Checks for Game Over
-  if (collide(arena, player)) { // Why no work?
+  if (collide(arena, player)) {
     arena.forEach(row => gameOverScreen(row));
-    // update();
     gameOver = true;
     pause = true;
   }
@@ -489,6 +502,33 @@ document.addEventListener('keydown', event => {
   }
 });
 
+function brooke(){
+  brookeMode = !brookeMode;
+}
+
+function artisticMode() {
+  artMode = !artMode;
+}
+
+function insanity() {
+  insaneMode = !insaneMode;
+  if(insaneMode) {
+    refreshUpNext();
+  }
+}
+
+function hardist() {
+  hardMode = !hardMode;
+  if(hardMode){
+    refreshUpNext();
+  }
+}
+
+document.getElementById('brooke').addEventListener('click', brooke);
+document.getElementById('art').addEventListener('click', artisticMode);
+document.getElementById('hard').addEventListener('click', hardist);
+document.getElementById('insane').addEventListener('click', insanity);
+
 // Piece colors
 const colors = [
   null,
@@ -515,6 +555,7 @@ let brookeMode = false;
 let artMode = false;
 let insaneMode = false;
 let newLoadMessage = true;
+let playerScored = false;
 const arena = createMatrix(12, 20);
 
 update();
