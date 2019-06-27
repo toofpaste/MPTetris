@@ -338,7 +338,6 @@ function playerReset() {
 
 function gameOverScreen(row) {
   row.fill(Math.floor(Math.random() * Math.floor(13)));
-  console.log(row);
   update();
 }
 
@@ -455,19 +454,13 @@ document.addEventListener('keydown', event => {
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
     insaneMode = !insaneMode;
-    if (insaneMode) {
-      refreshUpNext();
-    }
+    if (insaneMode) { refreshUpNext(); }
     updateScore();
   } else if (event.keyCode === 32) { // space bar
-    if (gameOver) {
-      newGame();
-    }
+    if (gameOver) { newGame(); }
   } else if (event.keyCode === 72) { // H key
     hardMode = !hardMode;
-    if (hardMode) {
-      refreshUpNext();
-    }
+    if (hardMode) { refreshUpNext(); }
   }
 });
 
