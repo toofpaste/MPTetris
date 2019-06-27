@@ -209,6 +209,7 @@ function drawMatrix(matrix, offset) {
   });
 }
 
+// Next piece view update
 function drawNextPiece(piece) {
   if (!brookeMode && !artMode) {
     nextCanvasContext.fillStyle = '#000'; // without this is picks random colors?
@@ -338,8 +339,8 @@ function playerReset() {
   drawNextPiece(nextPiece[0]);
   // Checks for Game Over
   if (collide(arena, player)) { // Why no work?
-    arena.forEach(row => setTimeout(gameOverScreen(row), 1000));
-    update();
+    arena.forEach(row => gameOverScreen(row));
+    // update();
     gameOver = true;
     pause = true;
   }
