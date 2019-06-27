@@ -5,24 +5,37 @@
 </head>
 
 <body>
-    <!-- <header id="header">
+    <header id="header">
         <div class="nav-box">
             <ul class="nav-list">
-                <li><a>Rules</a></li>
+
                 <li class="nav-logo"><a>
-                    <img id="logo-pic" />
-                </a></li>
-                <li><a>About</a></li>
+                        <img id="logo-pic" />
+                    </a></li>
+
             </ul>
         </div>
-        <button class="nav-button">Play</button>
-    </header> -->
+        <button id="single" class="nav-button">Single-Player</button>
+        <a href="https://mp-tetris.herokuapp.com/#ceh5g5"><button class="nav-button">Multi-Player</button></a>
+    </header>
 
     <section class="gameSection">
-        <div id="score"></div>
+
+        <div>
+            <div id="score"></div>
+            <button id="brooke" class="nav-button">Brooke Mode</button>
+            <button id="insane" class="nav-button">Insane Mode</button>
+            <button id="hard" class="nav-button">Hard Mode</button>
+            <button id="art" class="nav-button">Art Mode</button>
+            <img id="gifPic"/>
+            
+        </div>
+
+
         <canvas id="tetris" width="480" height="800"></canvas>
         <canvas id="nextPiece" width="300" height="300"></canvas>
-        <div id="rules">Rules</div>
+
+
     </section>
 
 </body>

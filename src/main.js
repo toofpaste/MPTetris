@@ -2,6 +2,9 @@ import './styles.css';
 import img from './assets/header.gif';
 import logoImg from './assets/logo3.png';
 import $ from 'jquery';
+import marioImg from './assets/mario.gif';
+import wowImg from './assets/wow.gif';
+// import scoreImg from './assets/score.gif';
 
 let myMusic = require('./audio/tetris.mp3');
 let dropSound = require('./audio/drop-hit.wav');
@@ -18,19 +21,24 @@ musicPlayer.volume = 0.2;
 meowPlayer.volume = 0.5;
 musicPlayer.play();
 
-// var logoPic = document.getElementById('logo-pic');
-// logoPic.src = logoImg;
+var logoPic = document.getElementById('logo-pic');
+var gifPic = document.getElementById('gifPic');
+// gifPic.src = wowImg;
+logoPic.src = logoImg;
 
-// var canvasBackgroundImg = new Image();
-// canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
+// var scorePic = document.getElementById('score-img');
+// scorePic.src = scoreImg;
 
-// $(function () {
-//   $('.gameSection').hide();
-//   $('.nav-button').click(function () {
-//     $('#header').hide('slow');
-//     $('.gameSection').show('slow');
-//   });
-// });
+var canvasBackgroundImg = new Image();
+canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
+
+$(function () {
+  $('.gameSection').hide();
+  $('#single').click(function () {
+    $('#header').hide('slow');
+    $('.gameSection').show('slow');
+  });
+});
 
 // Tetris logic //
 const canvas = document.getElementById('tetris');
@@ -55,21 +63,37 @@ const player = {
 
 context.scale(40, 40);
 
+function playWoW(){
+  if(playerScored){
+    gifPic.src = wowImg;
+    playerScored = false;
+    console.log('fuck')
+    setTimeout(function(){
+      gifPic.src = '';
+    },2500);
+  }
+}
+
 function arenaSweep() {
   let rowCount = 1;
+ 
   outer: for (let y = arena.length - 1; y > 0; --y) {
     for (let x = 0; x < arena[y].length; ++x) {
       if (arena[y][x] === 0) {
         continue outer;
+        
       }
     }
-
+    
     const row = arena.splice(y, 1)[0].fill(0);
     arena.unshift(row);
     ++y;
 
     player.score += rowCount;
+    playerScored = true;
+    playWoW();
   }
+  
 }
 
 function collide(arena, player) {
@@ -339,6 +363,7 @@ function newGame() {
   gameOver = false;
   arena.forEach(row => row.fill(0));
   player.score = 0;
+  playerReset();
   updateScore();
   update();
   drawNextPiece(nextPiece[0]);
@@ -416,6 +441,12 @@ function updateScore() {
   dropInterval = 500 - (player.score * 10);
 }
 
+function refreshUpNext() {
+  nextPiece.shift();
+  nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
+  drawNextPiece(nextPiece[0]);
+}
+
 document.addEventListener('keydown', event => {
   if (event.keyCode === 37) { // left arrow
     playerMove(-1);
@@ -449,6 +480,35 @@ document.addEventListener('keydown', event => {
 
 });
 
+function brooke(){
+  brookeMode = !brookeMode;
+}
+
+function artisticMode() {
+  artMode = !artMode;
+}
+
+function insanity() {
+  insaneMode = !insaneMode;
+  if(insaneMode) {
+    refreshUpNext();
+  }
+}
+
+function hardist() {
+  hardMode = !hardMode;
+  if(hardMode){
+    refreshUpNext();
+  }
+}
+
+
+document.getElementById('brooke').addEventListener('click', brooke);
+document.getElementById('art').addEventListener('click', artisticMode);
+document.getElementById('hard').addEventListener('click', hardist);
+document.getElementById('insane').addEventListener('click', insanity);
+
+
 // Piece colors
 const colors = [
   null,
@@ -474,10 +534,12 @@ let brookeMode = false;
 let artMode = false;
 let insaneMode = false;
 let newLoadMessage = true;
+let playerScored = false;
 const arena = createMatrix(12, 20);
 // const arena = createMatrix(32, 50);  // large arena
 
-playerReset();
+
 update();
 updateScore();
+draw();
 drawNextPiece(nextPiece[0]);
