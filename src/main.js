@@ -18,10 +18,13 @@ let clearPlayer = new Audio(clearLine);
 let meowPlayer = new Audio(meow);
 let hornPlayer = new Audio(airHorn);
 
-musicPlayer.volume = 0.2;
+musicPlayer.volume = 0.1;
 meowPlayer.volume = 0.5;
 hornPlayer.volume = 0.5;
 musicPlayer.play();
+dropPlayer.volume = 1;
+clearPlayer.volume = 0.75;
+rotatePlayer.volume = 1;
 
 var logoPic = document.getElementById('logo-pic');
 var gifPic = document.getElementById('gifPic');
