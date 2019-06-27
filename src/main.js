@@ -21,19 +21,19 @@ meowPlayer.volume = 0.5;
 hornPlayer.volume = 0.5;
 musicPlayer.play();
 
-// var logoPic = document.getElementById('logo-pic');
-// logoPic.src = logoImg;
+var logoPic = document.getElementById('logo-pic');
+logoPic.src = logoImg;
 
-// var canvasBackgroundImg = new Image();
-// canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
+var canvasBackgroundImg = new Image();
+canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
 
-// $(function () {
-//   $('.gameSection').hide();
-//   $('.nav-button').click(function () {
-//     $('#header').hide('slow');
-//     $('.gameSection').show('slow');
-//   });
-// });
+$(function () {
+  $('.gameSection').hide();
+  $('.nav-button').click(function () {
+    $('#header').hide('slow');
+    $('.gameSection').show('slow');
+  });
+});
 
 // Tetris logic //
 const canvas = document.getElementById('tetris');
@@ -73,6 +73,7 @@ function arenaSweep() {
       ++y;
       player.score += rowCount;
       dropInterval = 500 - (player.score * 10);
+      clearPlayer.play();
     }
   }
 }
@@ -85,6 +86,7 @@ function collide(arena, player) {
       if (mat[y][x] !== 0 &&
         (arena[y + pos.y] &&
           arena[y + pos.y][x + pos.x]) !== 0) {
+
         return true;
       }
     }
@@ -311,6 +313,7 @@ function playerDrop() {
   if (collide(arena, player)) {
     player.pos.y--;
     merge(arena, player);
+    dropPlayer.play();
     playerReset();
     arenaSweep();
     updateScore();
@@ -513,7 +516,6 @@ let artMode = false;
 let insaneMode = false;
 let newLoadMessage = true;
 const arena = createMatrix(12, 20);
-// const arena = createMatrix(32, 50);  // large arena
 
 update();
 updateScore();
