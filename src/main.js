@@ -57,7 +57,7 @@ context.scale(40, 40);
 
 // Clears completed lines
 function arenaSweep() {
-  if (!gameOver){
+  if (!gameOver) {
     let rowCount = 1;
     outer: for (let y = arena.length - 1; y > 0; --y) {
       for (let x = 0; x < arena[y].length; ++x) {
@@ -176,7 +176,7 @@ function createPiece(type) {
       [0, 13, 13],
       [0, 0, 0],
       [13, 13, 0],
-    ]
+    ];
   }
 }
 
@@ -301,9 +301,7 @@ function playerDrop() {
     player.pos.y--;
     merge(arena, player);
     playerReset();
-    console.log(player.score);
     arenaSweep();
-    console.log(player.score);
     updateScore();
   }
   dropCounter = 0;
@@ -330,14 +328,18 @@ function playerReset() {
   nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
   drawNextPiece(nextPiece[0]);
   // Checks for Game Over
-  if (collide(arena, player)) {
-    // console.log(player.score);
-    arena.forEach(row => row.fill(Math.floor(Math.random() * Math.floor(13))));
+  if (collide(arena, player)) { // Why no work?
+    arena.forEach(row => setTimeout(gameOverScreen(row), 1000));
     update();
     gameOver = true;
     pause = true;
-    // console.log(player.score);
   }
+}
+
+function gameOverScreen(row) {
+  row.fill(Math.floor(Math.random() * Math.floor(13)));
+  console.log(row);
+  update();
 }
 
 function newGame() {
