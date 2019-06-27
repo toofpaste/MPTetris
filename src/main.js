@@ -72,6 +72,7 @@ function arenaSweep() {
       arena.unshift(row);
       ++y;
       player.score += rowCount;
+      clearPlayer.play();
     }
   }
 }
@@ -84,6 +85,7 @@ function collide(arena, player) {
       if (mat[y][x] !== 0 &&
         (arena[y + pos.y] &&
           arena[y + pos.y][x + pos.x]) !== 0) {
+
         return true;
       }
     }
@@ -309,6 +311,7 @@ function playerDrop() {
   if (collide(arena, player)) {
     player.pos.y--;
     merge(arena, player);
+    dropPlayer.play();
     playerReset();
     arenaSweep();
     updateScore();
