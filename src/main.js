@@ -41,7 +41,7 @@ nextCanvasContext.fillStyle = '#000';
 nextCanvasContext.fillRect(0, 0, nextCanvas.width, nextCanvas.height);
 nextCanvasContext.scale(45, 45);
 let pieces = 'TJLOSZI';
-let nextPiece = [createPiece('I')]; //[createPiece(pieces[pieces.length * Math.random() | 0])];
+let nextPiece = [createPiece(pieces[pieces.length * Math.random() | 0])];
 
 const player = {
   pos: {
@@ -397,6 +397,7 @@ function update(time = 0) {
   }
 }
 
+// Updates scores and music modes
 function updateScore() {
   if (newLoadMessage) {
     document.getElementById('score').innerText = "Press Space Bar to Play";
@@ -426,6 +427,12 @@ function updateScore() {
   dropInterval = 500 - (player.score * 10);
 }
 
+function refreshUpNext() {
+  nextPiece.shift();
+  nextPiece.push(createPiece(pieces[pieces.length * Math.random() | 0]));
+  drawNextPiece(nextPiece[0]);
+}
+
 document.addEventListener('keydown', event => {
   if (event.keyCode === 37) { // left arrow
     playerMove(-1);
@@ -448,6 +455,9 @@ document.addEventListener('keydown', event => {
     updateScore();
   } else if (event.keyCode === 54) { // 6 Key
     insaneMode = !insaneMode;
+    if (insaneMode) {
+      refreshUpNext();
+    }
     updateScore();
   } else if (event.keyCode === 32) { // space bar
     if (gameOver) {
@@ -455,8 +465,10 @@ document.addEventListener('keydown', event => {
     }
   } else if (event.keyCode === 72) { // H key
     hardMode = !hardMode;
+    if (hardMode) {
+      refreshUpNext();
+    }
   }
-
 });
 
 // Piece colors
