@@ -420,7 +420,7 @@ function musicController() {
   }
 }
 
-// Updates scores and music modes
+// Updates Score Display
 function updateScore() {
   if (newLoadMessage) {
     document.getElementById('score').innerText = "Press Space Bar to Play";
