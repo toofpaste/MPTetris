@@ -32,10 +32,12 @@ logoPic.src = logoImg;
 
 var canvasBackgroundImg = new Image();
 canvasBackgroundImg.src = 'https://i.imgur.com/khgh6tF.gif'
-
+let start = false;
 $(function () {
   $('.gameSection').hide();
   $('#single').click(function () {
+    first = 0;
+    start = true;
     $('#header').hide('slow');
     $('.gameSection').show('slow');
   });
@@ -367,6 +369,7 @@ function playerReset() {
 }
 
 function gameOverScreen(row) {
+  first = 0;
   row.fill(Math.floor(Math.random() * Math.floor(14)));
   update();
 }
@@ -527,10 +530,316 @@ function hardist() {
   }
 }
 
+function buttonLeft(){
+playerMove(-1);
+}
+function buttonRight(){
+playerMove(1);
+}
+function buttonUp(){
+playerRotate(1);
+}
 document.getElementById('brooke').addEventListener('click', brooke);
 document.getElementById('art').addEventListener('click', artisticMode);
 document.getElementById('hard').addEventListener('click', hardist);
 document.getElementById('insane').addEventListener('click', insanity);
+document.addEventListener('touchstart', handleTouchStart, false);
+document.addEventListener('touchmove', handleTouchMove, false);
+
+
+var xDown = null;
+var yDown = null;
+function getTouches(evt) {
+  return evt.touches ||             // browser API
+      evt.originalEvent.touches; // jQuery
+}
+let first = 0;
+function handleTouchStart(evt) {
+  const firstTouch = getTouches(evt)[0];
+  xDown = firstTouch.clientX;
+  yDown = firstTouch.clientY;
+  //console.log(yDown);
+  console.log(first);
+  console.log(start);
+  first++;
+  if(first >= 1 && first < 2 && start){
+    newGame();
+  }
+
+}
+function handleTouchMove(evt) {
+  if ( ! xDown || ! yDown ) {
+    return;
+  }
+
+  var xUp = evt.touches[0].clientX;
+  var yUp = evt.touches[0].clientY;
+
+  var xDiff = xDown - xUp;
+  var yDiff = yDown - yUp;
+  // console.log("-------------------------------------------");
+  // console.log(xUp);
+  // console.log(yUp);
+  if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+    if ( xDiff > 0 ) {
+      buttonLeft();
+      /* left swipe */
+    } else {
+      buttonRight();
+      /* right swipe */
+    }
+  } else {
+    if ( yDiff > 0 ) {
+      buttonUp();
+      /* up swipe */
+    } else {
+      playerSwipeDrop();
+      /* down swipe */
+    }
+  }
+  /* reset values */
+  xDown = null;
+  yDown = null;
+}
+function playerSwipeDrop() {
+  if (insaneMode) {
+    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+  }
+  player.pos.y++;
+    if(!collide(arena, player)){
+    player.pos.y++;
+    player.pos.y++
+    if(!collide(arena, player)){
+      player.pos.y++
+      if(!collide(arena, player)){
+        player.pos.y++
+        if(!collide(arena, player)){
+          player.pos.y++
+          if(!collide(arena, player)){
+            player.pos.y++
+            if(!collide(arena, player)){
+              player.pos.y++
+              if(!collide(arena, player)){
+                player.pos.y++
+                if(!collide(arena, player)){
+                  player.pos.y++
+                  if(!collide(arena, player)){
+                    player.pos.y++
+                    if(!collide(arena, player)){
+                      player.pos.y++
+                      if(!collide(arena, player)){
+                        player.pos.y++
+                        if(!collide(arena, player)){
+                          player.pos.y++
+                          if(!collide(arena, player)){
+                            player.pos.y++
+                            if(!collide(arena, player)){
+                              player.pos.y++
+                              if(!collide(arena, player)){
+                                player.pos.y++
+                                if(!collide(arena, player)){
+                                  player.pos.y++
+                                  if(!collide(arena, player)){
+                                    player.pos.y++
+                                    if(!collide(arena, player)){
+                                      player.pos.y++
+                                      if(!collide(arena, player)){
+                                        player.pos.y++
+                                        if(!collide(arena, player)){
+                                          player.pos.y++
+                                          if(!collide(arena, player)){
+                                            player.pos.y++
+                                            if(!collide(arena, player)){
+                                              player.pos.y++
+                                              if(!collide(arena, player)){
+                                                player.pos.y++
+                                              }else {
+                                                player.pos.y--
+                                                merge(arena, player);
+                                                dropPlayer.play();
+                                                playerReset();
+                                                arenaSweep();
+                                                updateScore();
+                                              }
+                                            }else {
+                                              player.pos.y--
+                                              merge(arena, player);
+                                              dropPlayer.play();
+                                              playerReset();
+                                              arenaSweep();
+                                              updateScore();
+                                            }
+                                          }else {
+                                            player.pos.y--
+                                            merge(arena, player);
+                                            dropPlayer.play();
+                                            playerReset();
+                                            arenaSweep();
+                                            updateScore();
+                                          }
+                                        }else {
+                                          player.pos.y--
+                                          merge(arena, player);
+                                          dropPlayer.play();
+                                          playerReset();
+                                          arenaSweep();
+                                          updateScore();
+                                        }
+                                      }else {
+                                        player.pos.y--
+                                        merge(arena, player);
+                                        dropPlayer.play();
+                                        playerReset();
+                                        arenaSweep();
+                                        updateScore();
+                                      }
+                                    }else {
+                                      player.pos.y--
+                                      merge(arena, player);
+                                      dropPlayer.play();
+                                      playerReset();
+                                      arenaSweep();
+                                      updateScore();
+                                    }
+                                  }else {
+                                    player.pos.y--
+                                    merge(arena, player);
+                                    dropPlayer.play();
+                                    playerReset();
+                                    arenaSweep();
+                                    updateScore();
+                                  }
+                                }else {
+                                  player.pos.y--
+                                  merge(arena, player);
+                                  dropPlayer.play();
+                                  playerReset();
+                                  arenaSweep();
+                                  updateScore();
+                                }
+                              }else {
+                                player.pos.y--
+                                merge(arena, player);
+                                dropPlayer.play();
+                                playerReset();
+                                arenaSweep();
+                                updateScore();
+                              }
+                            }else {
+                              player.pos.y--
+                              merge(arena, player);
+                              dropPlayer.play();
+                              playerReset();
+                              arenaSweep();
+                              updateScore();
+                            }
+                          }else {
+                            player.pos.y--
+                            merge(arena, player);
+                            dropPlayer.play();
+                            playerReset();
+                            arenaSweep();
+                            updateScore();
+                          }
+                        }else {
+                          player.pos.y--
+                          merge(arena, player);
+                          dropPlayer.play();
+                          playerReset();
+                          arenaSweep();
+                          updateScore();
+                        }
+                      }else {
+                        player.pos.y--
+                        merge(arena, player);
+                        dropPlayer.play();
+                        playerReset();
+                        arenaSweep();
+                        updateScore();
+                      }
+                    }else {
+                      player.pos.y--
+                      merge(arena, player);
+                      dropPlayer.play();
+                      playerReset();
+                      arenaSweep();
+                      updateScore();
+                    }
+                  }else {
+                    player.pos.y--
+                    merge(arena, player);
+                    dropPlayer.play();
+                    playerReset();
+                    arenaSweep();
+                    updateScore();
+                  }
+                }else {
+                  player.pos.y--
+                  merge(arena, player);
+                  dropPlayer.play();
+                  playerReset();
+                  arenaSweep();
+                  updateScore();
+                }
+              }else {
+                player.pos.y--
+                merge(arena, player);
+                dropPlayer.play();
+                playerReset();
+                arenaSweep();
+                updateScore();
+              }
+            }else {
+              player.pos.y--
+              merge(arena, player);
+              dropPlayer.play();
+              playerReset();
+              arenaSweep();
+              updateScore();
+            }
+          }else {
+            player.pos.y--
+            merge(arena, player);
+            dropPlayer.play();
+            playerReset();
+            arenaSweep();
+            updateScore();
+          }
+        }else {
+          player.pos.y--
+          merge(arena, player);
+          dropPlayer.play();
+          playerReset();
+          arenaSweep();
+          updateScore();
+        }
+      }else {
+        player.pos.y--
+        merge(arena, player);
+        dropPlayer.play();
+        playerReset();
+        arenaSweep();
+        updateScore();
+      }
+    }else {
+      player.pos.y--
+      merge(arena, player);
+      dropPlayer.play();
+      playerReset();
+      arenaSweep();
+      updateScore();
+    }
+  }else {
+    player.pos.y--;
+    merge(arena, player);
+    dropPlayer.play();
+    playerReset();
+    arenaSweep();
+    updateScore();
+  }
+  dropCounter = 0;
+}
+
 
 // Piece colors
 const colors = [

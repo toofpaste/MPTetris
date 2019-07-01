@@ -178,13 +178,13 @@ body {
     #logo-pic {
         width: 9.375em;
         height: 7em;
-      
-        left: 25%;
-        
+
+        left: 15%;
+
         animation: logoAnimate .8s ease-in;
     }
     .nav-button {
-       
+
         width: 100px;
         height: 20px;
         font-size: 10px;
@@ -203,10 +203,10 @@ body {
         margin-top: 50%;
         position: absolute;
         left: 1.5%;
-        
+
     }
     #nextPiece{
-       
+
         height: 40px;
         width: 50px;
         position: absolute;
@@ -219,11 +219,11 @@ body {
     }
 
     .gameSection {
-     
-      
+
+
         background-image: url('./assets/header.gif');
         height: 100vh;
-        
+
         background-size: cover;
         background-repeat: no-repeat;
     }
@@ -234,9 +234,7 @@ body {
         left: 30%;
     }
 
-   
-    
-    
+
+
+
 }
-
-
