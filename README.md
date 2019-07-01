@@ -17,6 +17,7 @@ _A simple Tetris game that drops block shapes down and board while a user tries 
 
 ## Setup/Installation Requirements
 
+* _Visit https://tetris-9455b.firebaseapp.com/ to play a deployed web version of the game, or_
 * _Clone project from github_
 * _view code in text editor if necessary_
 * _any text inside quotations ("") should be performed inside your terminal._
