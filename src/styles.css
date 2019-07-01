@@ -173,3 +173,27 @@ body {
         height: 200px;
     }
 }
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 375px) {
+    #logo-pic {
+        width: 600px;
+        height: 500px;
+        /* position: absolute; */
+        left: 18%;
+        background-image: url('https://images.unsplash.com/photo-1561928924-c2c333de75cb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60');
+        animation: logoAnimate .8s ease-in;
+    }
+    .nav-button {
+        /* margin-top: 50%; */
+        width: 400px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        left: 30%;
+        margin-top: 80%;
+    }
+    .nav-button:first-child {
+        margin-top: 2em;
+    }
+    
+}
